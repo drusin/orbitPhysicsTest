@@ -11,8 +11,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.Random;
-
 public class MainScreen implements Screen {
 
 	private final World world = new World(new Vector2(0, 0), true);
@@ -22,8 +20,6 @@ public class MainScreen implements Screen {
 
 	private Array<Fixture> planets = new Array<>();
 	private Array<Fixture> bodies = new Array<>();
-
-	private Random random = new Random();
 
 	public MainScreen() {
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
@@ -68,8 +64,6 @@ public class MainScreen implements Screen {
 		fixtureDef.filter.maskBits = 0;
 		return body.createFixture(fixtureDef);
 	}
-
-
 
 	@Override
 	public void show() {
