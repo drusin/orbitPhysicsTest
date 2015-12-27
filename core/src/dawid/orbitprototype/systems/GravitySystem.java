@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Shape;
 import dawid.orbitprototype.components.DynamicComponent;
 import dawid.orbitprototype.components.PlanetComponent;
 
@@ -23,18 +23,23 @@ public class GravitySystem extends EntitySystem {
 
 	@Override
 	public void update(float deltaTime) {
-		for (Entity body : dynamicEntities) {
+		for (Entity dynamic : dynamicEntities) {
+			Vector2 dynamicPosition = dynamic.getComponent(DynamicComponent.class).fixture.getBody().getWorldCenter();
 			for (Entity planet : planets) {
-				Body bodyBody = body.getComponent(DynamicComponent.class).fixture.getBody();
-				Body planetBody = planet.getComponent(PlanetComponent.class).fixture.getBody();
-
-				Vector2 distance = new Vector2(planetBody.getPosition()).sub(bodyBody.getPosition());
-				distance.nor();
-				float force = 50f;
-				distance.x = distance.x * planet.getComponent(PlanetComponent.class).fixture.getShape().getRadius() * force * deltaTime;
-				distance.y = distance.y * planet.getComponent(PlanetComponent.class).fixture.getShape().getRadius() * force * deltaTime;
-
-				bodyBody.applyLinearImpulse(distance, bodyBody.getLocalCenter(), true);
+				Shape planetShape = planet.getComponent(PlanetComponent.class).fixture.getShape();
+				float planetRadius = planetShape.getRadius();
+				Vector2 planetPosition = planet.getComponent(PlanetComponent.class).fixture.getBody().getWorldCenter();
+				Vector2 planetDistance = new Vector2(0, 0);
+				planetDistance.add(dynamicPosition);
+				planetDistance.sub(planetPosition);
+				float finalDistance = planetDistance.len();
+				if (true) { //finalDistance <= planetRadius * 3
+					planetDistance.rotate(180);
+					float vecSum = Math.abs(planetDistance.x)+Math.abs(planetDistance.y);
+					planetDistance.x = planetDistance.x * ((1/vecSum)*planetRadius/finalDistance);
+					planetDistance.y = planetDistance.y * ((1/vecSum)*planetRadius/finalDistance);
+					dynamic.getComponent(DynamicComponent.class).fixture.getBody().applyForceToCenter(planetDistance, true);
+				}
 			}
 		}
 	}

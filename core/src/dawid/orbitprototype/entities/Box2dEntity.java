@@ -21,7 +21,6 @@ public abstract class Box2dEntity extends Entity {
 		fixtureDef.shape = shape;
 		fixtureDef.restitution = 0;
 		fixtureDef.friction = 0;
-		fixtureDef.filter.maskBits = 0;
 		fixture = body.createFixture(fixtureDef);
 	}
 }

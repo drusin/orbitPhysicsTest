@@ -19,7 +19,7 @@ public class Spawner {
 		timer += delta;
 		if (timer > TIME_TO_SPAWN) {
 			timer = 0;
-			new BodyEntity(engine, world, 50, 50);
+			new BodyEntity(engine, world, 50, 650);
 		}
 	}
 }
