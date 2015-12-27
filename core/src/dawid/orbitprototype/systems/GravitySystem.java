@@ -30,7 +30,7 @@ public class GravitySystem extends EntitySystem {
 
 				Vector2 distance = new Vector2(planetBody.getPosition()).sub(bodyBody.getPosition());
 				distance.nor();
-				float force = 50;
+				float force = 50f;
 				distance.x = distance.x * planet.getComponent(PlanetComponent.class).fixture.getShape().getRadius() * force * deltaTime;
 				distance.y = distance.y * planet.getComponent(PlanetComponent.class).fixture.getShape().getRadius() * force * deltaTime;
 

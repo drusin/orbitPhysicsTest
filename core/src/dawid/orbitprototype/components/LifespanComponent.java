@@ -1,10 +1,11 @@
 package dawid.orbitprototype.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class PlanetComponent implements Component {
-	public final Fixture fixture;
+public class LifespanComponent implements Component {
+
+	public final float lifespan;
+	public float currentTime = 0;
 }

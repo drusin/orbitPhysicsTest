@@ -1,110 +1,62 @@
 package dawid.orbitprototype;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import dawid.orbitprototype.components.DynamicComponent;
-import dawid.orbitprototype.components.PlanetComponent;
+import dawid.orbitprototype.entities.BodyEntity;
+import dawid.orbitprototype.entities.PlanetEntity;
 import dawid.orbitprototype.systems.GravitySystem;
 import dawid.orbitprototype.systems.InputSystem;
+import dawid.orbitprototype.systems.LifespanSystem;
 
-public class MainScreen implements Screen {
+public class MainScreen extends ScreenAdapter {
 
 	private final World world = new World(new Vector2(0, 0), true);
+	private final Engine engine = new Engine();
 	private final OrthographicCamera gameCam = new OrthographicCamera();
-	private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	private final Viewport gamePort = new FillViewport(MyGdxGame.scaleDown(1280), MyGdxGame.scaleDown(720), gameCam);
-
-	private final Engine engine;
+	private final Spawner spawner;
 
 	public MainScreen() {
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-		engine = new Engine();
 		engine.addSystem(new GravitySystem());
 		engine.addSystem(new InputSystem());
+		engine.addSystem(new LifespanSystem(engine, world));
 
-		createPlanet(320, 360, 20);
-		createPlanet(960, 360, 20);
-		createPlanet(50, 50, 20);
-		createPlanet(800, 100, 20);
-		createPlanet(900, 650, 20);
-	}
+		new PlanetEntity(engine, world, 320, 360, 20);
+		new PlanetEntity(engine, world, 960, 360, 20);
+		new PlanetEntity(engine, world, 50, 50, 20);
+		new PlanetEntity(engine, world, 800, 100, 20);
+		new PlanetEntity(engine, world, 900, 650, 20);
 
-	private void createPlanet(float x, float y, float radius) {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(MyGdxGame.scaleDown(x), MyGdxGame.scaleDown(y));
-		bodyDef.type = BodyDef.BodyType.StaticBody;
-		Body body = world.createBody(bodyDef);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-		shape.setRadius(MyGdxGame.scaleDown(radius));
-
-		fixtureDef.shape = shape;
-		fixtureDef.restitution = 0;
-		fixtureDef.friction = 0;
-		fixtureDef.filter.maskBits = 0;
-		Fixture fixture = body.createFixture(fixtureDef);
-		Entity entity = new Entity();
-		PlanetComponent component = new PlanetComponent();
-		component.fixture = fixture;
-		entity.add(component);
-		engine.addEntity(entity);
-	}
-
-	private void createBody(float x, float y) {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(MyGdxGame.scaleDown(x), MyGdxGame.scaleDown(y));
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		Body body = world.createBody(bodyDef);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-		shape.setRadius(MyGdxGame.scaleDown(10));
-
-		fixtureDef.shape = shape;
-		fixtureDef.restitution = 0;
-		fixtureDef.friction = 0;
-		fixtureDef.filter.maskBits = 0;
-		Fixture fixture = body.createFixture(fixtureDef);
-		Entity entity = new Entity();
-		DynamicComponent component = new DynamicComponent();
-		component.fixture = fixture;
-		entity.add(component);
-		engine.addEntity(entity);
-	}
-
-	@Override
-	public void show() {
-
+		spawner = new Spawner(engine, world);
 	}
 
 	@Override
 	public void render(float delta) {
 		handleInput();
+		spawner.update(delta);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.step(delta, 6, 2);
 		engine.update(delta);
-		MyGdxGame.batch.setProjectionMatrix(gameCam.combined);
-		MyGdxGame.batch.begin();
-		MyGdxGame.batch.end();
 		debugRenderer.render(world, gameCam.combined);
 	}
 
 	private void handleInput() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			createBody(640, 360);
+			new BodyEntity(engine, world, 640, 360);
 		}
 	}
 
@@ -114,22 +66,8 @@ public class MainScreen implements Screen {
 	}
 
 	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
-	}
-
-	@Override
 	public void dispose() {
-
+		world.dispose();
+		debugRenderer.dispose();
 	}
 }
