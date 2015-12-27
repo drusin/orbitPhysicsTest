@@ -33,7 +33,7 @@ public class MainScreen extends ScreenAdapter {
 		engine.addSystem(new InputSystem());
 		engine.addSystem(new LifespanSystem(engine, world));
 
-		new PlanetEntity(engine, world, 320, 360, 20);
+		new PlanetEntity(engine, world, 320, 360, 200);
 		new PlanetEntity(engine, world, 960, 360, 20);
 		new PlanetEntity(engine, world, 50, 50, 20);
 		new PlanetEntity(engine, world, 800, 100, 20);
