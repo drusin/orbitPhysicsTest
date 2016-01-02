@@ -1,6 +1,5 @@
 package dawid.orbitprototype.entities;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,7 +14,7 @@ public class BodyEntity extends Box2dEntity {
 
 	private final DestroyableComponent destroyableComponent;
 
-	public BodyEntity(Engine engine, World world, float x, float y) {
+	public BodyEntity(World world, float x, float y) {
 		super(world, BodyDef.BodyType.DynamicBody, x, y, 1, BODY_BIT, (short)(PLANET_BIT | GOAL_BIT));
 		DynamicComponent dynamic = new DynamicComponent(fixture);
 		add(dynamic);
@@ -23,7 +22,6 @@ public class BodyEntity extends Box2dEntity {
 		add(lifespan);
 		destroyableComponent = new DestroyableComponent(fixture);
 		add(destroyableComponent);
-		engine.addEntity(this);
 		fixture.setUserData(this);
 	}
 
