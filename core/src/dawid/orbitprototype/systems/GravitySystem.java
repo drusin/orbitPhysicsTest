@@ -34,7 +34,7 @@ public class GravitySystem extends EntitySystem {
 				Vector2 planetPosition = planetFixture.getBody().getWorldCenter();
 				Vector2 planetDistance = new Vector2(dynamicPosition).sub(planetPosition);
 				float finalDistance = planetDistance.len();
-				if (true) { //finalDistance <= planetRadius * 3
+				if (finalDistance <= planetRadius * 3) {
 					planetDistance.rotate(180);
 					float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
 					planetDistance.x = planetDistance.x * ((1 / vecSum) * planetRadius / finalDistance);

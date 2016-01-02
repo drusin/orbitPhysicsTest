@@ -8,7 +8,7 @@ import dawid.orbitprototype.components.PlanetComponent;
 public class PlanetEntity extends Box2dEntity {
 
 	public PlanetEntity(Engine engine, World world, float x, float y, float radius) {
-		super(world, BodyDef.BodyType.StaticBody, x, y, radius);
+		super(world, BodyDef.BodyType.StaticBody, x, y, radius, (short) 2, (short) 4);
 		PlanetComponent planet = new PlanetComponent(fixture);
 		add(planet);
 		engine.addEntity(this);

@@ -4,11 +4,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import dawid.orbitprototype.components.PlanetComponent;
+import dawid.orbitprototype.entities.PlanetEntity;
 
-import static dawid.orbitprototype.MyGdxGame.scaleDown;
 import static dawid.orbitprototype.MyGdxGame.scaleUp;
 
 public class InputSystem extends IteratingSystem {
@@ -28,7 +29,12 @@ public class InputSystem extends IteratingSystem {
 			float radius = f.getShape().getRadius();
 			if (x > scaleUp(position.x) - scaleUp(radius) && x < scaleUp(position.x) + scaleUp(radius)
 					&& y > scaleUp(position.y) - scaleUp(radius) && y < scaleUp(position.y) + scaleUp(radius)) {
-				f.getShape().setRadius(radius + scaleDown(1));
+				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+					((PlanetEntity)entity).resize(-1);
+				}
+				else {
+					((PlanetEntity)entity).resize(1);
+				}
 			}
 		}
 	}
