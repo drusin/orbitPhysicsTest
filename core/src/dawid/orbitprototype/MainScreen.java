@@ -12,10 +12,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.entities.BodyEntity;
-import dawid.orbitprototype.entities.PlanetEntity;
+import dawid.orbitprototype.systems.DestroySystem;
 import dawid.orbitprototype.systems.GravitySystem;
 import dawid.orbitprototype.systems.InputSystem;
 import dawid.orbitprototype.systems.LifespanSystem;
+import dawid.orbitprototype.util.LevelLoader;
+import dawid.orbitprototype.util.WorldContactListener;
 
 public class MainScreen extends ScreenAdapter {
 
@@ -31,15 +33,20 @@ public class MainScreen extends ScreenAdapter {
 
 		engine.addSystem(new GravitySystem());
 		engine.addSystem(new InputSystem());
-		engine.addSystem(new LifespanSystem(engine, world));
+		engine.addSystem(new LifespanSystem());
+		engine.addSystem(new DestroySystem(engine, world));
 
-		new PlanetEntity(engine, world, 320, 360, 200);
-		new PlanetEntity(engine, world, 960, 360, 20);
-		new PlanetEntity(engine, world, 50, 50, 20);
-		new PlanetEntity(engine, world, 800, 100, 20);
-		new PlanetEntity(engine, world, 900, 650, 20);
+//		new PlanetEntity(engine, world, 320, 700, 20);
+//		new PlanetEntity(engine, world, 960, 360, 20);
+//		new PlanetEntity(engine, world, 50, 50, 20);
+//		new PlanetEntity(engine, world, 800, 100, 20);
+//		new PlanetEntity(engine, world, 900, 650, 20);
+//
+//		new GoalEntity(world, 1260, 20, 15);
 
-		spawner = new Spawner(engine, world);
+		spawner = new LevelLoader().loadMap("levels/test.tmx", engine, world);
+
+		world.setContactListener(new WorldContactListener());
 	}
 
 	@Override

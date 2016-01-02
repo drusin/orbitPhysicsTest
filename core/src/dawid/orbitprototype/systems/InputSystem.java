@@ -30,10 +30,10 @@ public class InputSystem extends IteratingSystem {
 			if (x > scaleUp(position.x) - scaleUp(radius) && x < scaleUp(position.x) + scaleUp(radius)
 					&& y > scaleUp(position.y) - scaleUp(radius) && y < scaleUp(position.y) + scaleUp(radius)) {
 				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-					((PlanetEntity)entity).resize(-1);
+					((PlanetEntity)entity).resize(-0.5f);
 				}
 				else {
-					((PlanetEntity)entity).resize(1);
+					((PlanetEntity)entity).resize(0.5f);
 				}
 			}
 		}
