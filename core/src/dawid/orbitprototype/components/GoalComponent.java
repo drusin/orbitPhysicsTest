@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class GoalComponent implements Component {
-	public static final float MAX_TIME_BETWEEN = 2f;
+	public static final float MAX_TIME_BETWEEN = 0.3f;
 	public final Fixture fixture;
 	public int neededBodies = 100;
 	public float allBodies = 0;
