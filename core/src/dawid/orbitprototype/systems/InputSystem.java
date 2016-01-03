@@ -20,7 +20,7 @@ public class InputSystem extends IteratingSystem {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX();
 			int y = 720 - Gdx.input.getY();
 
@@ -30,10 +30,10 @@ public class InputSystem extends IteratingSystem {
 			if (x > scaleUp(position.x) - scaleUp(radius) && x < scaleUp(position.x) + scaleUp(radius)
 					&& y > scaleUp(position.y) - scaleUp(radius) && y < scaleUp(position.y) + scaleUp(radius)) {
 				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-					((PlanetEntity)entity).resize(-0.5f);
+					((PlanetEntity)entity).resize(-10f);
 				}
 				else {
-					((PlanetEntity)entity).resize(0.5f);
+					((PlanetEntity)entity).resize(10f);
 				}
 			}
 		}

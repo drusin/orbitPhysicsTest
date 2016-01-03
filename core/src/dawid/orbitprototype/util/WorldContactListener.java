@@ -2,6 +2,7 @@ package dawid.orbitprototype.util;
 
 import com.badlogic.gdx.physics.box2d.*;
 import dawid.orbitprototype.entities.BodyEntity;
+import dawid.orbitprototype.entities.GoalEntity;
 
 import static dawid.orbitprototype.util.CollisionBits.BODY_BIT;
 import static dawid.orbitprototype.util.CollisionBits.GOAL_BIT;
@@ -12,9 +13,12 @@ public class WorldContactListener implements ContactListener {
 		short collisionDefinition = (short)(contact.getFixtureA().getFilterData().categoryBits | contact.getFixtureB().getFilterData().categoryBits);
 
 		switch (collisionDefinition) {
-			case BODY_BIT | GOAL_BIT:
-				((BodyEntity) sortFixturesByCategoryBit(contact, BODY_BIT)[0].getUserData()).arrivedAtGoal();
+			case BODY_BIT | GOAL_BIT: {
+				Fixture[] fixtures = sortFixturesByCategoryBit(contact, BODY_BIT);
+				((BodyEntity) fixtures[0].getUserData()).arrivedAtGoal();
+				((GoalEntity) fixtures[1].getUserData()).bodyArrived();
 				break;
+			}
 		}
 	}
 
