@@ -33,8 +33,6 @@ public class DrawPercentageSystem extends IteratingSystem {
 		GoalComponent goalComponent = entity.getComponent(GoalComponent.class);
 		Vector2 position = goalComponent.fixture.getBody().getPosition();
 		float radius = goalComponent.fixture.getShape().getRadius() + scaleDown(10);
-		batch.begin();
 		font.draw(batch, String.valueOf(Math.round(goalComponent.allBodies)) + "%", scaleUp(position.x), scaleUp(position.y - radius));
-		batch.end();
 	}
 }

@@ -5,30 +5,37 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import dawid.orbitprototype.components.PlanetComponent;
 import dawid.orbitprototype.entities.PlanetEntity;
 
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
-
 public class InputSystem extends IteratingSystem {
 
-	public InputSystem() {
+	private final OrthographicCamera gameCam;
+
+	public InputSystem(OrthographicCamera gameCam) {
 		super(Family.all(PlanetComponent.class).get());
+		this.gameCam = gameCam;
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		if (Gdx.input.justTouched()) {
-			int x = Gdx.input.getX();
-			int y = 720 - Gdx.input.getY();
+			Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+			gameCam.unproject(touchPos);
+			float x = touchPos.x;
+			float y = touchPos.y;
+
+			System.out.println(touchPos);
 
 			Fixture f = entity.getComponent(PlanetComponent.class).fixture;
 			Vector2 position = f.getBody().getPosition();
 			float radius = f.getShape().getRadius();
-			if (x > scaleUp(position.x) - scaleUp(radius) && x < scaleUp(position.x) + scaleUp(radius)
-					&& y > scaleUp(position.y) - scaleUp(radius) && y < scaleUp(position.y) + scaleUp(radius)) {
+			if (x > position.x - radius && x < position.x + radius
+					&& y > position.y - radius && y < position.y + radius) {
 				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 					((PlanetEntity)entity).resize(-10f);
 				}
