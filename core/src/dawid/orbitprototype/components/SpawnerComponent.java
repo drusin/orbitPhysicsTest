@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SpawnerComponent implements Component {
 
-	public final float TIME_TO_SPAWN = 0.1f;
-
+	public final float timeToSpawn;
 	public final Vector2 spawnLocation;
 	public final Vector2 spawnVelocity;
 

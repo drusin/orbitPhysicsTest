@@ -1,6 +1,7 @@
 package dawid.orbitprototype.util;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -24,11 +25,19 @@ public class LevelLoader {
 
 		for (RectangleMapObject object : map.getLayers().get(TiledConstants.SPAWNER_LAYER).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rectangle = object.getRectangle();
+			MapProperties properties = object.getProperties();
+			float timeToSpawn = properties.containsKey("timeToSpawn")
+					? Float.valueOf((String) properties.get("timeToSpawn"))
+					: 0.1f;
 			float x = rectangle.getX() + rectangle.getWidth() / 2;
 			float y = rectangle.getY() + rectangle.getHeight() / 2;
-			int vx = Integer.valueOf((String)object.getProperties().get("vx"));
-			int vy = Integer.valueOf((String)object.getProperties().get("vy"));
-			engine.addEntity(new SpawnerEntity(new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy))));
+			float vx = properties.containsKey("vx")
+					? Float.valueOf((String) properties.get("vx"))
+					: 0f;
+			float vy = properties.containsKey("vy")
+					? Float.valueOf((String) properties.get("vy"))
+					: 0;
+			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy))));
 		}
 
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.PLANET_LAYER).getObjects().getByType(EllipseMapObject.class)) {

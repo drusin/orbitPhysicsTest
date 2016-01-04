@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.height = 720;
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 300;
-		new LwjglApplication(new MyGdxGame(), config);
+		new LwjglApplication(new MyGdxGame(arg), config);
 	}
 }

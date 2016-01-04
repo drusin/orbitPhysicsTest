@@ -27,6 +27,10 @@ public class MainScreen extends ScreenAdapter {
 	private final Viewport gamePort = new FitViewport(MyGdxGame.scaleDown(1280), MyGdxGame.scaleDown(720), gameCam);
 	private final SpriteBatch batch = new SpriteBatch();
 
+	public MainScreen(String level) {
+		this(new FileHandle(level));
+	}
+
 	public MainScreen(FileHandle level) {
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="40" tileheight="40" nextobjectid="20">
- <objectgroup name="Spawner">
+ <objectgroup color="#ffffff" name="Spawner">
   <object id="1" x="400" y="-40" width="40" height="40">
    <properties>
+    <property name="timeToSpawn" value="0.1"/>
     <property name="vx" value="0"/>
     <property name="vy" value="-100"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Planets">
+ <objectgroup color="#000000" name="Planets">
   <object id="9" x="560" y="200" width="160" height="160">
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Goal">
+ <objectgroup color="#00ff00" name="Goal">
   <object id="7" x="840" y="560" width="40" height="40">
    <ellipse/>
   </object>

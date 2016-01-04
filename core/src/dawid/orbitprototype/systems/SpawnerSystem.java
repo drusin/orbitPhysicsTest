@@ -24,7 +24,7 @@ public class SpawnerSystem extends IteratingSystem {
 		SpawnerComponent component = entity.getComponent(SpawnerComponent.class);
 		component.timer += deltaTime;
 
-		if (component.timer > component.TIME_TO_SPAWN) {
+		if (component.timer > component.timeToSpawn) {
 			component.timer = 0;
 			float offset = (MyGdxGame.random.nextInt(200) - 100) / 10f;
 			BodyEntity bodyEntity = new BodyEntity(world, component.spawnLocation.x + offset, component.spawnLocation.y + offset);

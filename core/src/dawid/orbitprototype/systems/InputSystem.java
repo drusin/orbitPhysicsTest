@@ -29,8 +29,6 @@ public class InputSystem extends IteratingSystem {
 			float x = touchPos.x;
 			float y = touchPos.y;
 
-			System.out.println(touchPos);
-
 			Fixture f = entity.getComponent(PlanetComponent.class).fixture;
 			Vector2 position = f.getBody().getPosition();
 			float radius = f.getShape().getRadius();
