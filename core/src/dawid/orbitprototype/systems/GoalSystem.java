@@ -33,8 +33,8 @@ public class GoalSystem extends IteratingSystem {
 		else {
 			goalComponent.timer = 0;
 		}
-		if (goalComponent.timer > GoalComponent.MAX_TIME_BETWEEN) {
-			goalComponent.allBodies -= deltaTime * 10;
+		if (goalComponent.timer > goalComponent.maxTimeBetween) {
+			goalComponent.allBodies -= deltaTime * goalComponent.reduceScale;
 			if (goalComponent.allBodies < 0) {
 				goalComponent.allBodies = 0;
 			}

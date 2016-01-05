@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="40" tileheight="40" nextobjectid="25">
+ <objectgroup name="Spawner">
+  <object id="1" x="600" y="-40" width="40" height="40">
+   <properties>
+    <property name="vx" value="60"/>
+    <property name="vy" value="-100"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Planets">
+  <object id="9" x="480" y="80" width="160" height="160">
+   <ellipse/>
+  </object>
+  <object id="23" x="720" y="400" width="40" height="40">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Goal">
+  <object id="7" x="630" y="600" width="40" height="40">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

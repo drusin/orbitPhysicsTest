@@ -14,11 +14,11 @@ public class BodyEntity extends Box2dEntity {
 
 	private final DestroyableComponent destroyableComponent;
 
-	public BodyEntity(World world, float x, float y) {
+	public BodyEntity(World world, float x, float y, float minLifespan, float lifespanVar) {
 		super(world, BodyDef.BodyType.DynamicBody, x, y, 1, BODY_BIT, (short)(PLANET_BIT | GOAL_BIT));
 		DynamicComponent dynamic = new DynamicComponent(fixture);
 		add(dynamic);
-		LifespanComponent lifespan = new LifespanComponent(MyGdxGame.random.nextInt(20) + 5);
+		LifespanComponent lifespan = new LifespanComponent(MyGdxGame.random.nextFloat() * lifespanVar + minLifespan);
 		add(lifespan);
 		destroyableComponent = new DestroyableComponent(fixture);
 		add(destroyableComponent);

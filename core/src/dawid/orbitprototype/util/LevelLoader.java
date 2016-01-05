@@ -23,37 +23,62 @@ public class LevelLoader {
 	public static void loadMap(String name, Engine engine, World world) {
 		TiledMap map = mapLoader.load(name);
 
+		createSpawners(engine, map);
+		createPlanets(engine, world, map);
+		createGoals(engine, world, map);
+	}
+
+	private static void createSpawners(Engine engine, TiledMap map) {
 		for (RectangleMapObject object : map.getLayers().get(TiledConstants.SPAWNER_LAYER).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rectangle = object.getRectangle();
 			MapProperties properties = object.getProperties();
-			float timeToSpawn = properties.containsKey("timeToSpawn")
-					? Float.valueOf((String) properties.get("timeToSpawn"))
-					: 0.1f;
+			float timeToSpawn = getFloatProperty(0.1f, properties, "timeToSpawn");
 			float x = rectangle.getX() + rectangle.getWidth() / 2;
 			float y = rectangle.getY() + rectangle.getHeight() / 2;
-			float vx = properties.containsKey("vx")
-					? Float.valueOf((String) properties.get("vx"))
-					: 0f;
-			float vy = properties.containsKey("vy")
-					? Float.valueOf((String) properties.get("vy"))
-					: 0;
-			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy))));
+			float vx = getFloatProperty(0f, properties, "vx");
+			float vy = getFloatProperty(0f, properties, "vy");
+			float minLifespan = getFloatProperty(5f, properties, "minLifespan");
+			float lifespanVar = getFloatProperty(20f, properties, "lifespanVar");
+			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy)), minLifespan, lifespanVar));
 		}
+	}
 
+	private static void createPlanets(Engine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.PLANET_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
+			MapProperties properties = new MapProperties();
 			float x = ellipse.x + ellipse.width / 2;
 			float y = ellipse.y + ellipse.height / 2;
 			float radius = (ellipse.width + ellipse.height) / 4;
-			engine.addEntity(new PlanetEntity(world, x, y, radius));
+			int size = getIntProperty(0, properties, "size");
+			int maxSize = getIntProperty(999, properties, "maxSize");
+			int minSize = getIntProperty(-999, properties, "minSize");
+			engine.addEntity(new PlanetEntity(world, x, y, radius, size, maxSize, minSize));
 		}
+	}
 
+	private static void createGoals(Engine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.GOAL_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
+			MapProperties properties = object.getProperties();
+			float maxTimeBetween = getFloatProperty(0.3f, properties, "maxTimeBetween");
+			float reduceScale = getFloatProperty(10f, properties, "reduceScale");
 			float x = ellipse.x + ellipse.width / 2;
 			float y = ellipse.y + ellipse.height / 2;
 			float radius = (ellipse.width + ellipse.height) / 4;
-			engine.addEntity(new GoalEntity(world, x, y, radius));
+			engine.addEntity(new GoalEntity(world, x, y, radius, maxTimeBetween, reduceScale));
 		}
+	}
+
+	private static float getFloatProperty(float defaultValue, MapProperties properties, String property) {
+		return properties.containsKey(property)
+				? Float.valueOf((String) properties.get(property))
+				: defaultValue;
+	}
+
+	private static int getIntProperty(int defaultValue, MapProperties properties, String property) {
+		return properties.containsKey(property)
+				? Integer.valueOf((String) properties.get(property))
+				: defaultValue;
 	}
 }

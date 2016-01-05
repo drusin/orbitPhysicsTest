@@ -11,9 +11,9 @@ public class GoalEntity extends Box2dEntity {
 
 	private final GoalComponent goalComponent;
 
-	public GoalEntity(World world, float x, float y, float radius) {
+	public GoalEntity(World world, float x, float y, float radius, float maxTimeBetween, float reduceScale) {
 		super(world, BodyDef.BodyType.StaticBody, x, y, radius, GOAL_BIT, BODY_BIT);
-		goalComponent = new GoalComponent(fixture);
+		goalComponent = new GoalComponent(fixture, maxTimeBetween, reduceScale);
 		add(goalComponent);
 		fixture.setUserData(this);
 	}
