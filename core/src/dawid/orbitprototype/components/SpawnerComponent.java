@@ -12,6 +12,7 @@ public class SpawnerComponent implements Component {
 	public final Vector2 spawnVelocity;
 	public final float minLifespan;
 	public final float lifespanVar;
+	public final float spread;
 
 	public float timer = 0;
 }

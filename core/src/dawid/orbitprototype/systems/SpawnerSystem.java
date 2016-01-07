@@ -28,8 +28,9 @@ public class SpawnerSystem extends IteratingSystem {
 			int v = (int) Math.floor(component.timer / component.timeToSpawn);
 			component.timer -= v * component.timeToSpawn;
 			for (int i = 0; i < v; i++) {
-				float offset = (MyGdxGame.random.nextInt(200) - 100) / 10f;
-				BodyEntity bodyEntity = new BodyEntity(world, component.spawnLocation.x + offset, component.spawnLocation.y + offset, component.minLifespan, component.lifespanVar);
+				float offsetX = (MyGdxGame.random.nextFloat() * component.spread * 2 - component.spread);
+				float offsetY = (MyGdxGame.random.nextFloat() * component.spread * 2 - component.spread);
+				BodyEntity bodyEntity = new BodyEntity(world, component.spawnLocation.x + offsetX, component.spawnLocation.y + offsetY, component.minLifespan, component.lifespanVar);
 				engine.addEntity(bodyEntity);
 				bodyEntity.setLinearVelocity(component.spawnVelocity);
 			}

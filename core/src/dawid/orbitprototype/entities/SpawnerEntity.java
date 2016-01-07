@@ -6,8 +6,8 @@ import dawid.orbitprototype.components.SpawnerComponent;
 
 public class SpawnerEntity extends Entity {
 
-	public SpawnerEntity(float timeToSpawn, Vector2 spawnLocation, Vector2 spawnVelocity, float minLifespan, float lifespanVar) {
-		SpawnerComponent spawnerComponent = new SpawnerComponent(timeToSpawn, spawnLocation, spawnVelocity, minLifespan, lifespanVar);
+	public SpawnerEntity(float timeToSpawn, Vector2 spawnLocation, Vector2 spawnVelocity, float minLifespan, float lifespanVar, float spread) {
+		SpawnerComponent spawnerComponent = new SpawnerComponent(timeToSpawn, spawnLocation, spawnVelocity, minLifespan, lifespanVar, spread);
 		add(spawnerComponent);
 	}
 }

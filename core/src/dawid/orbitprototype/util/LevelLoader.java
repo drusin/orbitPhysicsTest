@@ -39,7 +39,8 @@ public class LevelLoader {
 			float vy = getFloatProperty(0f, properties, "vy");
 			float minLifespan = getFloatProperty(5f, properties, "minLifespan");
 			float lifespanVar = getFloatProperty(20f, properties, "lifespanVar");
-			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy)), minLifespan, lifespanVar));
+			float spread = getFloatProperty(10, properties, "spread");
+			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy)), minLifespan, lifespanVar, spread));
 		}
 	}
 
