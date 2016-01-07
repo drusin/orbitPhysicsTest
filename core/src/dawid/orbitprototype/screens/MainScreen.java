@@ -22,7 +22,7 @@ public class MainScreen extends ScreenAdapter {
 	private static final World world = new World(new Vector2(0, 0), true);
 	private static final Engine engine = new Engine();
 
-	private final OrthographicCamera gameCam = new OrthographicCamera(12.8f, 7.2f);
+	private final OrthographicCamera gameCam = new OrthographicCamera(1280, 720);
 	private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	private final Viewport gamePort = new FitViewport(MyGdxGame.scaleDown(1280), MyGdxGame.scaleDown(720), gameCam);
 	private final SpriteBatch batch = new SpriteBatch();
@@ -41,7 +41,8 @@ public class MainScreen extends ScreenAdapter {
 		engine.addSystem(new SpawnerSystem(engine, world));
 		engine.addSystem(new GoalSystem());
 		engine.addSystem(new DrawPercentageSystem(batch));
-		engine.addSystem(new DrawPlanetSystem(batch));
+//		engine.addSystem(new DrawPlanetSystem(batch));
+		engine.addSystem(new DrawGoalSystem(batch));
 
 		LevelLoader.loadMap(level.path(), engine, world);
 
@@ -54,13 +55,12 @@ public class MainScreen extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		world.step(delta, 6, 2);
+		debugRenderer.render(world, gameCam.combined);
 
-		gameCam.update();
 		batch.begin();
 		engine.update(delta);
 		batch.end();
 
-		debugRenderer.render(world, gameCam.combined);
 	}
 
 	@Override
