@@ -1,5 +1,7 @@
 package dawid.orbitprototype.systems;
 
+import static dawid.orbitprototype.MyGdxGame.scaleUp;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -7,9 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import dawid.orbitprototype.components.GoalComponent;
 
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
+import dawid.orbitprototype.components.GoalComponent;
 
 public class DrawGoalSystem extends IteratingSystem {
 
@@ -32,7 +33,6 @@ public class DrawGoalSystem extends IteratingSystem {
 		GoalComponent goalComponent = entity.getComponent(GoalComponent.class);
 		int spriteNum = (int) Math.floor(goalComponent.allBodies / 20);
 		float alpha = (goalComponent.allBodies % 20) / 20f;
-		System.out.println("bodies: " + goalComponent.allBodies + " alpha: " + alpha);
 		Vector2 position = goalComponent.fixture.getBody().getPosition();
 		float radius = scaleUp(goalComponent.fixture.getShape().getRadius());
 		batch.draw(sprites.get(spriteNum), scaleUp(position.x) - radius, scaleUp(position.y) - radius, radius * 2, radius * 2);
