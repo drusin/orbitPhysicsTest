@@ -40,7 +40,6 @@ public class MainScreen extends ScreenAdapter {
 		engine.addSystem(new DestroySystem(engine, world));
 		engine.addSystem(new SpawnerSystem(engine, world));
 		engine.addSystem(new GoalSystem());
-		engine.addSystem(new DrawPercentageSystem(batch));
 		engine.addSystem(new DrawPlanetSystem(batch, gameCam));
 		engine.addSystem(new DrawGoalSystem(batch));
 
@@ -57,6 +56,7 @@ public class MainScreen extends ScreenAdapter {
 		world.step(delta, 6, 2);
 		debugRenderer.render(world, gameCam.combined);
 
+		batch.setProjectionMatrix(gameCam.combined);
 		batch.begin();
 		engine.update(delta);
 		batch.end();

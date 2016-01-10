@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dawid.orbitprototype.components.PlanetComponent;
 
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
-
 public class DrawPlanetSystem extends IteratingSystem {
 
 	private final SpriteBatch batch;
@@ -36,17 +34,17 @@ public class DrawPlanetSystem extends IteratingSystem {
 		gameCam.unproject(mousePosition);
 		PlanetComponent planetComponent = entity.getComponent(PlanetComponent.class);
 		Vector2 position = planetComponent.fixture.getBody().getPosition();
-		float radius = scaleUp(planetComponent.fixture.getShape().getRadius());
-		batch.draw(planetComponent.texture, scaleUp(position.x) - radius, scaleUp(position.y) - radius, radius * 2, radius * 2);
-		batch.draw(eyewhite, scaleUp(position.x) - radius * 0.85f, scaleUp(position.y), radius * 0.75f, radius * 0.75f);
-		batch.draw(eyewhite, scaleUp(position.x) + radius * 0.1f, scaleUp(position.y), radius * 0.75f, radius * 0.75f);
+		float radius = planetComponent.fixture.getShape().getRadius();
+		batch.draw(planetComponent.texture, position.x - radius, position.y - radius, radius * 2, radius * 2);
+		batch.draw(eyewhite, position.x - radius * 0.85f, position.y, radius * 0.75f, radius * 0.75f);
+		batch.draw(eyewhite, position.x + radius * 0.1f, position.y, radius * 0.75f, radius * 0.75f);
 
-		float xCenter = scaleUp(position.x);
-		float xLeftCenter = scaleUp(position.x) - radius * 0.6f;
-		float xRightCenter = scaleUp(position.x) + radius * 0.35f;
-		float yCenter = scaleUp(position.y) + radius * 0.25f;
-		float mouseX = scaleUp(mousePosition.x);
-		float mouseY = scaleUp(mousePosition.y);
+		float xCenter = position.x;
+		float xLeftCenter = position.x - radius * 0.6f;
+		float xRightCenter = position.x + radius * 0.35f;
+		float yCenter = position.y + radius * 0.25f;
+		float mouseX = mousePosition.x;
+		float mouseY = mousePosition.y;
 
 		Vector2 eye = new Vector2(xCenter - mouseX, yCenter - mouseY);
 		eye.nor();

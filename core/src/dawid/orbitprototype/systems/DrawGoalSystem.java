@@ -1,7 +1,5 @@
 package dawid.orbitprototype.systems;
 
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -9,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-
 import dawid.orbitprototype.components.GoalComponent;
 
 public class DrawGoalSystem extends IteratingSystem {
@@ -34,11 +31,11 @@ public class DrawGoalSystem extends IteratingSystem {
 		int spriteNum = (int) Math.floor(goalComponent.allBodies / 20);
 		float alpha = (goalComponent.allBodies % 20) / 20f;
 		Vector2 position = goalComponent.fixture.getBody().getPosition();
-		float radius = scaleUp(goalComponent.fixture.getShape().getRadius());
-		batch.draw(sprites.get(spriteNum), scaleUp(position.x) - radius, scaleUp(position.y) - radius, radius * 2, radius * 2);
+		float radius = goalComponent.fixture.getShape().getRadius();
+		batch.draw(sprites.get(spriteNum), position.x - radius, position.y - radius, radius * 2, radius * 2);
 		if (spriteNum < sprites.size -1) {
 			batch.setColor(1f, 1f, 1f, alpha);
-			batch.draw(sprites.get(spriteNum +1), scaleUp(position.x) - radius, scaleUp(position.y) - radius, radius * 2, radius * 2);
+			batch.draw(sprites.get(spriteNum +1), position.x - radius, position.y - radius, radius * 2, radius * 2);
 			batch.setColor(1f, 1f, 1f, 1f);
 		}
 	}
