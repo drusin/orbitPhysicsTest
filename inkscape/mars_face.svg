@@ -26,15 +26,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="299.65046"
+     inkscape:cx="378.9336"
      inkscape:cy="589.17877"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="838"
-     inkscape:window-x="-8"
-     inkscape:window-y="58"
+     inkscape:window-width="1280"
+     inkscape:window-height="1002"
+     inkscape:window-x="1592"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -104,26 +104,17 @@
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"
        id="path4311"
        sodipodi:type="arc"
-       sodipodi:cx="334.86557"
-       sodipodi:cy="394.24783"
+       sodipodi:cx="302.00839"
+       sodipodi:cy="357.10498"
        sodipodi:rx="15.657365"
        sodipodi:ry="15.657365"
        sodipodi:start="0"
        sodipodi:end="6.2794154"
        sodipodi:open="true"
-       d="m 350.52293,394.24783 a 15.657365,15.657365 0 0 1 -15.6426,15.65736 15.657365,15.657365 0 0 1 -15.6721,-15.62784 15.657365,15.657365 0 0 1 15.61307,-15.68682 15.657365,15.657365 0 0 1 15.70152,15.59828" />
-    <path
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:0"
-       id="path4313"
-       sodipodi:type="arc"
-       sodipodi:cx="335.87573"
-       sodipodi:cy="395.76303"
-       sodipodi:rx="7.5761442"
-       sodipodi:ry="6.0609155"
-       sodipodi:start="0"
-       sodipodi:end="6.2794154"
-       sodipodi:open="true"
-       d="m 343.45188,395.76303 a 7.5761442,6.0609155 0 0 1 -7.56901,6.06091 7.5761442,6.0609155 0 0 1 -7.58327,-6.04948 7.5761442,6.0609155 0 0 1 7.55471,-6.07232 7.5761442,6.0609155 0 0 1 7.59751,6.03804" />
+       d="m 317.66576,357.10498 a 15.657365,15.657365 0 0 1 -15.64261,15.65736 15.657365,15.657365 0 0 1 -15.67209,-15.62785 15.657365,15.657365 0 0 1 15.61306,-15.68681 15.657365,15.657365 0 0 1 15.70153,15.59827"
+       inkscape:export-filename="D:\dev\workspaces\jam prototypes\orbit physics\core\assets\graphics\iris.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        d="m -388.41701,361.54041 a 73.741135,73.741135 0 0 1 -73.67163,73.7411 73.741135,73.741135 0 0 1 -73.81051,-73.60211 73.741135,73.741135 0 0 1 73.53251,-73.87983 73.741135,73.741135 0 0 1 73.94911,73.46284"
        sodipodi:open="true"
@@ -138,30 +129,17 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:0"
        transform="scale(-1,1)" />
     <path
-       d="m -411.6505,396.39069 a 15.657365,15.657365 0 0 1 -15.6426,15.65735 15.657365,15.657365 0 0 1 -15.6721,-15.62784 15.657365,15.657365 0 0 1 15.61307,-15.68682 15.657365,15.657365 0 0 1 15.70152,15.59828"
+       d="m -449.50767,359.96213 a 15.657365,15.657365 0 0 1 -15.64261,15.65736 15.657365,15.657365 0 0 1 -15.6721,-15.62785 15.657365,15.657365 0 0 1 15.61307,-15.68681 15.657365,15.657365 0 0 1 15.70152,15.59827"
        sodipodi:open="true"
        sodipodi:end="6.2794154"
        sodipodi:start="0"
        sodipodi:ry="15.657365"
        sodipodi:rx="15.657365"
-       sodipodi:cy="396.39069"
-       sodipodi:cx="-427.30786"
+       sodipodi:cy="359.96213"
+       sodipodi:cx="-465.16504"
        sodipodi:type="arc"
        id="path4317"
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"
-       transform="scale(-1,1)" />
-    <path
-       d="m -418.72155,397.90588 a 7.5761442,6.0609155 0 0 1 -7.56901,6.06092 7.5761442,6.0609155 0 0 1 -7.58327,-6.04949 7.5761442,6.0609155 0 0 1 7.55471,-6.07232 7.5761442,6.0609155 0 0 1 7.59751,6.03804"
-       sodipodi:open="true"
-       sodipodi:end="6.2794154"
-       sodipodi:start="0"
-       sodipodi:ry="6.0609155"
-       sodipodi:rx="7.5761442"
-       sodipodi:cy="397.90588"
-       sodipodi:cx="-426.2977"
-       sodipodi:type="arc"
-       id="path4319"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:0"
        transform="scale(-1,1)" />
     <path
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"

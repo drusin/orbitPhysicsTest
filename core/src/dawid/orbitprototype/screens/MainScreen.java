@@ -12,17 +12,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import dawid.orbitprototype.MyGdxGame;
-import dawid.orbitprototype.systems.DestroySystem;
-import dawid.orbitprototype.systems.DrawGoalSystem;
-import dawid.orbitprototype.systems.DrawPercentageSystem;
-import dawid.orbitprototype.systems.DrawPlanetSystem;
-import dawid.orbitprototype.systems.GoalSystem;
-import dawid.orbitprototype.systems.GravitySystem;
-import dawid.orbitprototype.systems.InputSystem;
-import dawid.orbitprototype.systems.LifespanSystem;
-import dawid.orbitprototype.systems.SpawnerSystem;
+import dawid.orbitprototype.systems.*;
 import dawid.orbitprototype.util.LevelLoader;
 import dawid.orbitprototype.util.WorldContactListener;
 
@@ -50,7 +41,7 @@ public class MainScreen extends ScreenAdapter {
 		engine.addSystem(new SpawnerSystem(engine, world));
 		engine.addSystem(new GoalSystem());
 		engine.addSystem(new DrawPercentageSystem(batch));
-		engine.addSystem(new DrawPlanetSystem(batch));
+		engine.addSystem(new DrawPlanetSystem(batch, gameCam));
 		engine.addSystem(new DrawGoalSystem(batch));
 
 		LevelLoader.loadMap(level.path(), engine, world);
