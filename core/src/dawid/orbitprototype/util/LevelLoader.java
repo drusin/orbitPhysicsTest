@@ -47,7 +47,7 @@ public class LevelLoader {
 	private static void createPlanets(Engine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.PLANET_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
-			MapProperties properties = new MapProperties();
+			MapProperties properties = object.getProperties();
 			float x = ellipse.x + ellipse.width / 2;
 			float y = ellipse.y + ellipse.height / 2;
 			float radius = (ellipse.width + ellipse.height) / 4;

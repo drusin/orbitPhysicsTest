@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import dawid.orbitprototype.components.PlanetComponent;
 import dawid.orbitprototype.entities.PlanetEntity;
 
+import static dawid.orbitprototype.MyGdxGame.scaleDown;
+
 public class InputSystem extends IteratingSystem {
 
 	private final OrthographicCamera gameCam;
@@ -29,16 +31,19 @@ public class InputSystem extends IteratingSystem {
 			float x = touchPos.x;
 			float y = touchPos.y;
 
-			Fixture f = entity.getComponent(PlanetComponent.class).fixture;
+			PlanetComponent planetComponent = entity.getComponent(PlanetComponent.class);
+			Fixture f = planetComponent.fixture;
 			Vector2 position = f.getBody().getPosition();
 			float radius = f.getShape().getRadius();
 			if (x > position.x - radius && x < position.x + radius
 					&& y > position.y - radius && y < position.y + radius) {
-				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && f.getShape().getRadius() > scaleDown(10)) {
 					((PlanetEntity)entity).resize(-10f);
+					planetComponent.size --;
 				}
-				else {
+				else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && planetComponent.size < planetComponent.maxSize){
 					((PlanetEntity)entity).resize(10f);
+					planetComponent.size ++;
 				}
 			}
 		}

@@ -11,6 +11,11 @@
  </objectgroup>
  <objectgroup color="#000000" name="Planets">
   <object id="9" x="560" y="200" width="160" height="160">
+   <properties>
+    <property name="maxSize" value="3"/>
+    <property name="minSize" value="1"/>
+    <property name="size" value="2"/>
+   </properties>
    <ellipse/>
   </object>
  </objectgroup>
