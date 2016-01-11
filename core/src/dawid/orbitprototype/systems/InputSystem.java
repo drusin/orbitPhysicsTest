@@ -18,6 +18,7 @@ import static dawid.orbitprototype.MyGdxGame.scaleDown;
 public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private final OrthographicCamera gameCam;
+	private Vector2 startPos = null;
 
 	public InputSystem(OrthographicCamera gameCam) {
 		super(Family.all(PlanetComponent.class).get());
@@ -79,16 +80,28 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (button == Input.Buttons.MIDDLE) {
+			startPos = new Vector2(scaleDown(screenX), scaleDown(screenY));
+		}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		startPos = null;
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		if (startPos != null) {
+			Vector2 dragVec = new Vector2(scaleDown(screenX), scaleDown(screenY));
+			startPos.sub(dragVec);
+			startPos.y = -startPos.y;
+			gameCam.translate(startPos);
+			startPos.x = scaleDown(screenX);
+			startPos.y = scaleDown(screenY);
+		}
 		return false;
 	}
 
