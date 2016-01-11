@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="24" tilewidth="40" tileheight="40" nextobjectid="16">
+ <objectgroup color="#ffffff" name="Spawner">
+  <object id="1" x="280" y="40" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+  <object id="3" x="280" y="400" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+  <object id="4" x="722" y="362" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+  <object id="5" x="1124" y="242" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+  <object id="6" x="1164" y="714" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+  <object id="7" x="1844" y="710" width="40" height="40">
+   <properties>
+    <property name="vx" value="100"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#000000" name="Planets">
+  <object id="8" x="1400" y="160" width="200" height="200">
+   <ellipse/>
+  </object>
+  <object id="9" x="1480" y="640" width="200" height="200">
+   <ellipse/>
+  </object>
+  <object id="10" x="200" y="640" width="200" height="200">
+   <ellipse/>
+  </object>
+  <object id="11" x="560" y="40" width="240" height="240">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00aa00" name="Goal">
+  <object id="14" x="2040" y="80" width="400" height="400">
+   <ellipse/>
+  </object>
+  <object id="15" x="2240" y="720" width="200" height="200">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

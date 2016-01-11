@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.systems.*;
@@ -24,7 +24,7 @@ public class MainScreen extends ScreenAdapter {
 
 	private final OrthographicCamera gameCam = new OrthographicCamera(1280, 720);
 	private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-	private final Viewport gamePort = new FitViewport(MyGdxGame.scaleDown(1280), MyGdxGame.scaleDown(720), gameCam);
+	private final Viewport gamePort = new FillViewport(MyGdxGame.scaleDown(1280), MyGdxGame.scaleDown(720), gameCam);
 	private final SpriteBatch batch = new SpriteBatch();
 
 	public MainScreen(String level) {
@@ -35,7 +35,9 @@ public class MainScreen extends ScreenAdapter {
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
 		engine.addSystem(new GravitySystem());
-		engine.addSystem(new InputSystem(gameCam));
+		InputSystem inputSystem = new InputSystem(gameCam);
+		engine.addSystem(inputSystem);
+		Gdx.input.setInputProcessor(inputSystem);
 		engine.addSystem(new LifespanSystem());
 		engine.addSystem(new DestroySystem(engine, world));
 		engine.addSystem(new SpawnerSystem(engine, world));
@@ -50,6 +52,7 @@ public class MainScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		gameCam.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

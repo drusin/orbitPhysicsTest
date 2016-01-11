@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,7 +15,7 @@ import dawid.orbitprototype.entities.PlanetEntity;
 
 import static dawid.orbitprototype.MyGdxGame.scaleDown;
 
-public class InputSystem extends IteratingSystem {
+public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private final OrthographicCamera gameCam;
 
@@ -47,5 +48,58 @@ public class InputSystem extends IteratingSystem {
 				}
 			}
 		}
+		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+			gameCam.translate(-deltaTime, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+			gameCam.translate(0 , deltaTime);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+			gameCam.translate(deltaTime, 0);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			gameCam.translate(0, -deltaTime);
+		}
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		gameCam.zoom += amount * 0.2f;
+		return false;
 	}
 }
