@@ -4,21 +4,23 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dawid.orbitprototype.components.PlanetComponent;
+import dawid.orbitprototype.util.GameCamera;
+
+import static dawid.orbitprototype.MyGdxGame.scaleUp;
 
 public class DrawPlanetSystem extends IteratingSystem {
 
 	private final SpriteBatch batch;
-	private final OrthographicCamera gameCam;
+	private final GameCamera gameCam;
 	private final Texture eyewhite;
 	private final Texture iris;
 
-	public DrawPlanetSystem(SpriteBatch batch, OrthographicCamera gameCam) {
+	public DrawPlanetSystem(SpriteBatch batch, GameCamera gameCam) {
 		super(Family.all(PlanetComponent.class).get());
 		this.batch = batch;
 		this.gameCam = gameCam;
@@ -34,7 +36,9 @@ public class DrawPlanetSystem extends IteratingSystem {
 		gameCam.unproject(mousePosition);
 		PlanetComponent planetComponent = entity.getComponent(PlanetComponent.class);
 		Vector2 position = planetComponent.fixture.getBody().getPosition();
-		float radius = planetComponent.fixture.getShape().getRadius();
+		position.x = scaleUp(position.x);
+		position.y = scaleUp(position.y);
+		float radius = scaleUp(planetComponent.fixture.getShape().getRadius());
 		batch.draw(planetComponent.texture, position.x - radius, position.y - radius, radius * 2, radius * 2);
 		batch.draw(eyewhite, position.x - radius * 0.85f, position.y, radius * 0.75f, radius * 0.75f);
 		batch.draw(eyewhite, position.x + radius * 0.1f, position.y, radius * 0.75f, radius * 0.75f);

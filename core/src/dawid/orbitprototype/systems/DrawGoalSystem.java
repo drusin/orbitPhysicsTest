@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dawid.orbitprototype.components.GoalComponent;
 
+import static dawid.orbitprototype.MyGdxGame.scaleUp;
+
 public class DrawGoalSystem extends IteratingSystem {
 
 	private final SpriteBatch batch;
@@ -31,7 +33,9 @@ public class DrawGoalSystem extends IteratingSystem {
 		int spriteNum = (int) Math.floor(goalComponent.allBodies / 20);
 		float alpha = (goalComponent.allBodies % 20) / 20f;
 		Vector2 position = goalComponent.fixture.getBody().getPosition();
-		float radius = goalComponent.fixture.getShape().getRadius();
+		position.x = scaleUp(position.x);
+		position.y = scaleUp(position.y);
+		float radius = scaleUp(goalComponent.fixture.getShape().getRadius());
 		batch.draw(sprites.get(spriteNum), position.x - radius, position.y - radius, radius * 2, radius * 2);
 		if (spriteNum < sprites.size -1) {
 			batch.setColor(1f, 1f, 1f, alpha);
