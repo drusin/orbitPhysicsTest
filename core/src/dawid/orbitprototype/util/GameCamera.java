@@ -3,6 +3,7 @@ package dawid.orbitprototype.util;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import lombok.RequiredArgsConstructor;
 
 import static dawid.orbitprototype.MyGdxGame.scaleDown;
@@ -10,11 +11,12 @@ import static dawid.orbitprototype.MyGdxGame.scaleDown;
 @RequiredArgsConstructor
 public class GameCamera {
 
+	public final Viewport guiViewport;
 	public final OrthographicCamera guiCam;
 	public final OrthographicCamera physicsCam;
 
 	public void unproject(Vector3 input) {
-		guiCam.unproject(input);
+		guiViewport.unproject(input);
 	}
 
 	public void translate(float x, float y) {

@@ -45,7 +45,7 @@ public class MainScreen extends ScreenAdapter {
 		gamePort = new FitViewport(1280, 720, guiCam);
 		physicsPort = new FitViewport(scaleDown(1280), scaleDown(720), physicsCam);
 
-		gameCamera = new GameCamera(guiCam, physicsCam);
+		gameCamera = new GameCamera(gamePort, guiCam, physicsCam);
 
 		gameCamera.guiCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		gameCamera.physicsCam.position.set(physicsPort.getWorldWidth() / 2, physicsPort.getWorldHeight() / 2, 0);
@@ -55,7 +55,7 @@ public class MainScreen extends ScreenAdapter {
 		particleEffectPool = new ParticleEffectPool(particleEffect, 100, 100);
 
 		engine.addSystem(new GravitySystem());
-		InputSystem inputSystem = new InputSystem(gameCamera);
+		InputSystem inputSystem = new InputSystem(gameCamera, world);
 		engine.addSystem(inputSystem);
 		Gdx.input.setInputProcessor(inputSystem);
 		engine.addSystem(new LifespanSystem());
@@ -75,7 +75,7 @@ public class MainScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		fpsLogger.log();
+//		fpsLogger.log();
 
 		gameCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);

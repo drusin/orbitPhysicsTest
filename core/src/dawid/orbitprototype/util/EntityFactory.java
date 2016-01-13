@@ -42,7 +42,9 @@ public class EntityFactory {
 		LifespanComponent lifespanComponent = engine.createComponent(LifespanComponent.class);
 		lifespanComponent.lifespan = MyGdxGame.random.nextFloat() * lifespanVar + minLifespan;
 		entity.add(lifespanComponent);
-		entity.add(engine.createComponent(DestroyableComponent.class));
+		DestroyableComponent destroyableComponent = engine.createComponent(DestroyableComponent.class);
+		entity.add(destroyableComponent);
+		fixture.setUserData(destroyableComponent);
 		ParticleComponent particleComponent = engine.createComponent(ParticleComponent.class);
 		particleComponent.particle = particle;
 		entity.add(particleComponent);
@@ -59,6 +61,7 @@ public class EntityFactory {
 		GoalComponent goalComponent = engine.createComponent(GoalComponent.class);
 		goalComponent.maxTimeBetween = maxTimeBetween;
 		goalComponent.reduceScale = reduceScale;
+		fixture.setUserData(goalComponent);
 		entity.add(goalComponent);
 		engine.addEntity(entity);
 		return entity;
