@@ -1,34 +1,37 @@
 package dawid.orbitprototype.systems;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Shape;
+import dawid.orbitprototype.components.Box2dFixtureComponent;
 import dawid.orbitprototype.components.DynamicComponent;
 import dawid.orbitprototype.components.PlanetComponent;
 
 public class GravitySystem extends EntitySystem {
 
+	private final ComponentMapper<Box2dFixtureComponent> fixtureMapper;
 	private ImmutableArray<Entity> dynamicEntities;
 	private ImmutableArray<Entity> planets;
 
+	public GravitySystem() {
+		fixtureMapper = ComponentMapper.getFor(Box2dFixtureComponent.class);
+	}
+
 	@Override
 	public void addedToEngine(Engine engine) {
-		dynamicEntities = engine.getEntitiesFor(Family.all(DynamicComponent.class).get());
-		planets = engine.getEntitiesFor(Family.all(PlanetComponent.class).get());
+		dynamicEntities = engine.getEntitiesFor(Family.all(DynamicComponent.class, Box2dFixtureComponent.class).get());
+		planets = engine.getEntitiesFor(Family.all(PlanetComponent.class, Box2dFixtureComponent.class).get());
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		for (Entity dynamic : dynamicEntities) {
-			Fixture dynamicFixture = dynamic.getComponent(DynamicComponent.class).fixture;
+			Fixture dynamicFixture = fixtureMapper.get(dynamic).fixture;
 			Vector2 dynamicPosition = dynamicFixture.getBody().getWorldCenter();
 			for (Entity planet : planets) {
-				Fixture planetFixture = planet.getComponent(PlanetComponent.class).fixture;
+				Fixture planetFixture = fixtureMapper.get(planet).fixture;
 				Shape planetShape = planetFixture.getShape();
 				float planetRadius = planetShape.getRadius();
 				Vector2 planetPosition = planetFixture.getBody().getWorldCenter();

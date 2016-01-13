@@ -7,13 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import dawid.orbitprototype.components.PlanetComponent;
-import dawid.orbitprototype.entities.PlanetEntity;
 import dawid.orbitprototype.util.GameCamera;
-
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
 
 public class InputSystem extends IteratingSystem implements InputProcessor {
 
@@ -27,30 +22,30 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		if (Gdx.input.justTouched()) {
-			Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-			gameCam.unproject(touchPos);
-			float x = touchPos.x;
-			float y = touchPos.y;
-
-			PlanetComponent planetComponent = entity.getComponent(PlanetComponent.class);
-			Fixture f = planetComponent.fixture;
-			Vector2 position = f.getBody().getPosition();
-			position.x = scaleUp(position.x);
-			position.y = scaleUp(position.y);
-			float radius = scaleUp(f.getShape().getRadius());
-			if (x > position.x - radius && x < position.x + radius
-					&& y > position.y - radius && y < position.y + radius) {
-				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 10) {
-					((PlanetEntity)entity).resize(-10f);
-					planetComponent.size --;
-				}
-				else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && planetComponent.size < planetComponent.maxSize){
-					((PlanetEntity)entity).resize(10f);
-					planetComponent.size ++;
-				}
-			}
-		}
+//		if (Gdx.input.justTouched()) {
+//			Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//			gameCam.unproject(touchPos);
+//			float x = touchPos.x;
+//			float y = touchPos.y;
+//
+//			PlanetComponent planetComponent = entity.getComponent(PlanetComponent.class);
+//			Fixture f = planetComponent.fixture;
+//			Vector2 position = f.getBody().getPosition();
+//			position.x = scaleUp(position.x);
+//			position.y = scaleUp(position.y);
+//			float radius = scaleUp(f.getShape().getRadius());
+//			if (x > position.x - radius && x < position.x + radius
+//					&& y > position.y - radius && y < position.y + radius) {
+//				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 10) {
+//					((PlanetEntity)entity).resize(-10f);
+//					planetComponent.size --;
+//				}
+//				else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && planetComponent.size < planetComponent.maxSize){
+//					((PlanetEntity)entity).resize(10f);
+//					planetComponent.size ++;
+//				}
+//			}
+//		}
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			gameCam.translate(-deltaTime, 0);
 		}

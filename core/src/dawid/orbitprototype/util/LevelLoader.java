@@ -1,6 +1,6 @@
 package dawid.orbitprototype.util;
 
-import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,17 +10,12 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import dawid.orbitprototype.entities.GoalEntity;
-import dawid.orbitprototype.entities.PlanetEntity;
-import dawid.orbitprototype.entities.SpawnerEntity;
-
-import static dawid.orbitprototype.MyGdxGame.scaleDown;
 
 public class LevelLoader {
 
 	private final static TmxMapLoader mapLoader = new TmxMapLoader();
 
-	public static void loadMap(String name, Engine engine, World world) {
+	public static void loadMap(String name, PooledEngine engine, World world) {
 		TiledMap map = mapLoader.load(name);
 
 		createSpawners(engine, map);
@@ -28,7 +23,7 @@ public class LevelLoader {
 		createGoals(engine, world, map);
 	}
 
-	private static void createSpawners(Engine engine, TiledMap map) {
+	private static void createSpawners(PooledEngine engine, TiledMap map) {
 		for (RectangleMapObject object : map.getLayers().get(TiledConstants.SPAWNER_LAYER).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rectangle = object.getRectangle();
 			MapProperties properties = object.getProperties();
@@ -40,11 +35,11 @@ public class LevelLoader {
 			float minLifespan = getFloatProperty(5f, properties, "minLifespan");
 			float lifespanVar = getFloatProperty(20f, properties, "lifespanVar");
 			float spread = getFloatProperty(10, properties, "spread");
-			engine.addEntity(new SpawnerEntity(timeToSpawn, new Vector2(x, y), new Vector2(scaleDown(vx), scaleDown(vy)), minLifespan, lifespanVar, spread));
+			EntityFactory.createSpawnerEntity(engine, timeToSpawn, new Vector2(x, y), new Vector2(vx, vy), minLifespan, lifespanVar, spread);
 		}
 	}
 
-	private static void createPlanets(Engine engine, World world, TiledMap map) {
+	private static void createPlanets(PooledEngine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.PLANET_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
 			MapProperties properties = object.getProperties();
@@ -54,11 +49,11 @@ public class LevelLoader {
 			int size = getIntProperty(0, properties, "size");
 			int maxSize = getIntProperty(999, properties, "maxSize");
 			int minSize = getIntProperty(-999, properties, "minSize");
-			engine.addEntity(new PlanetEntity(world, x, y, radius, size, maxSize, minSize));
+			EntityFactory.createPlanetEntity(engine, world, x, y, radius, size, maxSize, minSize);
 		}
 	}
 
-	private static void createGoals(Engine engine, World world, TiledMap map) {
+	private static void createGoals(PooledEngine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.GOAL_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
 			MapProperties properties = object.getProperties();
@@ -67,7 +62,7 @@ public class LevelLoader {
 			float x = ellipse.x + ellipse.width / 2;
 			float y = ellipse.y + ellipse.height / 2;
 			float radius = (ellipse.width + ellipse.height) / 4;
-			engine.addEntity(new GoalEntity(world, x, y, radius, maxTimeBetween, reduceScale));
+			EntityFactory.createGoalEntity(engine, world, x, y, radius, maxTimeBetween, reduceScale);
 		}
 	}
 

@@ -7,11 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Vector2;
 import dawid.orbitprototype.components.GoalComponent;
-
-import static dawid.orbitprototype.MyGdxGame.scaleDown;
-import static dawid.orbitprototype.MyGdxGame.scaleUp;
 
 public class DrawPercentageSystem extends IteratingSystem {
 
@@ -30,9 +26,9 @@ public class DrawPercentageSystem extends IteratingSystem {
 	
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		GoalComponent goalComponent = entity.getComponent(GoalComponent.class);
-		Vector2 position = goalComponent.fixture.getBody().getPosition();
-		float radius = goalComponent.fixture.getShape().getRadius() + scaleDown(10);
-		font.draw(batch, String.valueOf(Math.round(goalComponent.allBodies)) + "%", scaleUp(position.x), scaleUp(position.y - radius));
+//		GoalComponent goalComponent = entity.getComponent(GoalComponent.class);
+//		Vector2 position = goalComponent.fixture.getBody().getPosition();
+//		float radius = goalComponent.fixture.getShape().getRadius() + scaleDown(10);
+//		font.draw(batch, String.valueOf(Math.round(goalComponent.allBodies)) + "%", scaleUp(position.x), scaleUp(position.y - radius));
 	}
 }

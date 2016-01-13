@@ -1,10 +1,12 @@
 package dawid.orbitprototype.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import lombok.RequiredArgsConstructor;
+import com.badlogic.gdx.utils.Pool;
 
-@RequiredArgsConstructor
-public class DynamicComponent implements Component {
-	public final Fixture fixture;
+public class DynamicComponent implements Component, Pool.Poolable {
+
+	@Override
+	public void reset() {
+
+	}
 }
