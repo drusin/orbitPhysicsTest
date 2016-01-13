@@ -13,6 +13,7 @@ public abstract class Box2dEntity extends Entity {
 
 	protected Fixture fixture;
 
+
 	public Box2dEntity (World world, BodyDef.BodyType bodyType, float x, float y, float radius, short categoryBits, short maskBits) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(scaleDown(x), scaleDown(y));

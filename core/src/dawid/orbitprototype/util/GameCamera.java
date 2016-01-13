@@ -23,7 +23,7 @@ public class GameCamera {
 	}
 
 	public void translate(Vector2 vector) {
-		translate(vector.x, vector.y);
+		translate(vector.x * guiCam.zoom, vector.y * guiCam.zoom);
 	}
 
 	public void update() {
@@ -33,6 +33,10 @@ public class GameCamera {
 
 	public void zoom(float zoom) {
 		guiCam.zoom += zoom;
-		physicsCam.zoom += zoom;
+		physicsCam.zoom = guiCam.zoom;
+	}
+
+	public float getZoom() {
+		return guiCam.zoom;
 	}
 }

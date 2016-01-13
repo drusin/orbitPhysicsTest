@@ -1,5 +1,7 @@
 package dawid.orbitprototype.entities;
 
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -7,14 +9,20 @@ import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.components.DestroyableComponent;
 import dawid.orbitprototype.components.DynamicComponent;
 import dawid.orbitprototype.components.LifespanComponent;
+import dawid.orbitprototype.components.ParticleComponent;
 
 import static dawid.orbitprototype.util.CollisionBits.*;
 
 public class BodyEntity extends Box2dEntity {
 
 	private final DestroyableComponent destroyableComponent;
+	private final ParticleComponent particleComponent;
 
-	public BodyEntity(World world, float x, float y, float minLifespan, float lifespanVar) {
+	public static void setup(Entity entity, World world, float x, float y, float minLifespan, float lifespanVar, ParticleEffectPool.PooledEffect particle) {
+
+	}
+
+	public BodyEntity(World world, float x, float y, float minLifespan, float lifespanVar, ParticleEffectPool.PooledEffect particle) {
 		super(world, BodyDef.BodyType.DynamicBody, x, y, 1, BODY_BIT, (short)(PLANET_BIT | GOAL_BIT));
 		DynamicComponent dynamic = new DynamicComponent(fixture);
 		add(dynamic);
@@ -22,6 +30,8 @@ public class BodyEntity extends Box2dEntity {
 		add(lifespan);
 		destroyableComponent = new DestroyableComponent(fixture);
 		add(destroyableComponent);
+		particleComponent = new ParticleComponent(particle);
+		add(particleComponent);
 		fixture.setUserData(this);
 	}
 
@@ -31,5 +41,6 @@ public class BodyEntity extends Box2dEntity {
 
 	public void arrivedAtGoal() {
 		destroyableComponent.destroy = true;
+		particleComponent.particle.free();
 	}
 }
