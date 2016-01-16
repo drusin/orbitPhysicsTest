@@ -1,13 +1,9 @@
 package dawid.orbitprototype.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.Pool;
+import lombok.Setter;
 
-public class DestroyableComponent implements Component, Pool.Poolable {
+@Setter
+public class DestroyableComponent implements Component{
 	public boolean destroy = false;
-
-	@Override
-	public void reset() {
-		destroy = false;
-	}
 }

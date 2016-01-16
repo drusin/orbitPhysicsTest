@@ -46,7 +46,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 			Vector2 position = fixtureComponent.fixture.getBody().getPosition();
 			position.x = scaleUp(position.x);
 			position.y = scaleUp(position.y);
-			float radius = scaleUp(fixtureComponent.fixture.getShape().getRadius()) * gameCam.getZoom();
+			float radius = scaleUp(fixtureComponent.fixture.getShape().getRadius());
 			if (x > position.x - radius && x < position.x + radius
 					&& y > position.y - radius && y < position.y + radius) {
 				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 10) {

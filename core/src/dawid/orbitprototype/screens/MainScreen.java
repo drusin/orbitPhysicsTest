@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.systems.*;
+import dawid.orbitprototype.util.EntityFactory;
 import dawid.orbitprototype.util.GameCamera;
 import dawid.orbitprototype.util.LevelLoader;
 import dawid.orbitprototype.util.WorldContactListener;
@@ -34,6 +35,7 @@ public class MainScreen extends ScreenAdapter {
 	private final SpriteBatch batch = new SpriteBatch();
 	private final ParticleEffectPool particleEffectPool;
 	private FPSLogger fpsLogger;
+	private EntityFactory entityFactory;
 
 	public MainScreen(String level) {
 		this(new FileHandle(level));
@@ -54,20 +56,22 @@ public class MainScreen extends ScreenAdapter {
 		particleEffect.load(Gdx.files.internal("stardust__.particle"), Gdx.files.internal(""));
 		particleEffectPool = new ParticleEffectPool(particleEffect, 100, 100);
 
+		entityFactory = new EntityFactory();
+
 		engine.addSystem(new GravitySystem());
 		InputSystem inputSystem = new InputSystem(gameCamera, world);
 		engine.addSystem(inputSystem);
 		Gdx.input.setInputProcessor(inputSystem);
 		engine.addSystem(new LifespanSystem());
 		engine.addSystem(new DestroySystem(engine, world));
-		engine.addSystem(new SpawnerSystem(engine, world, particleEffectPool::obtain));
+		engine.addSystem(new SpawnerSystem(engine, world, particleEffectPool::obtain, entityFactory));
 		engine.addSystem(new GoalSystem());
 		engine.addSystem(new DrawPlanetSystem(batch, gameCamera));
 		engine.addSystem(new DrawGoalSystem(batch));
 		engine.addSystem(new DrawDustSystem(batch));
 		engine.addSystem(new RemoveParticlesSystem());
 
-		LevelLoader.loadMap(level.path(), engine, world);
+		LevelLoader.loadMap(level.path(), engine, world, entityFactory);
 
 		world.setContactListener(new WorldContactListener());
 		fpsLogger = new FPSLogger();

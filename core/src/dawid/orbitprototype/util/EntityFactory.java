@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.components.*;
 
@@ -15,24 +16,28 @@ import static dawid.orbitprototype.util.CollisionBits.*;
 
 public class EntityFactory {
 
-	public static Entity createPlanetEntity(Engine engine, World world, float x, float y, float radius, int size, int maxSize, int minSize) {
+	private final Array<Texture> planetTextures;
+
+	public EntityFactory() {
+		planetTextures = new Array<>();
+		planetTextures.add(new Texture("graphics/planets/mars.png"));
+		planetTextures.add(new Texture("graphics/planets/neptune.png"));
+	}
+
+	public Entity createPlanetEntity(Engine engine, World world, float x, float y, float radius) {
 		Entity entity = new Entity();
 		Fixture fixture = FixtureCreator.createFixture(world, BodyDef.BodyType.StaticBody, x, y, radius, PLANET_BIT, BODY_BIT);
-		Texture texture = new Texture("graphics/planets/mars.png");
 		Box2dFixtureComponent box2dFixtureComponent = new Box2dFixtureComponent();
 		box2dFixtureComponent.fixture = fixture;
 		entity.add(box2dFixtureComponent);
 		PlanetComponent planetComponent = new PlanetComponent();
-		planetComponent.texture = texture;
-		planetComponent.size = size;
-		planetComponent.maxSize = maxSize;
-		planetComponent.minSize = minSize;
+		planetComponent.texture = planetTextures.get(MyGdxGame.random.nextInt(planetTextures.size));
 		entity.add(planetComponent);
 		engine.addEntity(entity);
 		return entity;
 	}
 
-	public static Entity createDustEntity(Engine engine, World world, float x, float y, float minLifespan, float lifespanVar, ParticleEffectPool.PooledEffect particle) {
+	public Entity createDustEntity(Engine engine, World world, float x, float y, float minLifespan, float lifespanVar, ParticleEffectPool.PooledEffect particle) {
 		Entity entity = new Entity();
 		Fixture fixture = FixtureCreator.createFixture(world, BodyDef.BodyType.DynamicBody, x, y, 1, BODY_BIT, (short) (PLANET_BIT | GOAL_BIT));
 		Box2dFixtureComponent box2dFixtureComponent = new Box2dFixtureComponent();
@@ -52,30 +57,23 @@ public class EntityFactory {
 		return entity;
 	}
 
-	public static Entity createGoalEntity(Engine engine, World world, float x, float y, float radius, float maxTimeBetween, float reduceScale) {
+	public Entity createGoalEntity(Engine engine, World world, float x, float y, float radius) {
 		Entity entity = new Entity();
 		Fixture fixture = FixtureCreator.createFixture(world, BodyDef.BodyType.StaticBody, x, y, radius, GOAL_BIT, BODY_BIT);
 		Box2dFixtureComponent box2dFixtureComponent = new Box2dFixtureComponent();
 		box2dFixtureComponent.fixture = fixture;
 		entity.add(box2dFixtureComponent);
 		GoalComponent goalComponent = new GoalComponent();
-		goalComponent.maxTimeBetween = maxTimeBetween;
-		goalComponent.reduceScale = reduceScale;
 		fixture.setUserData(goalComponent);
 		entity.add(goalComponent);
 		engine.addEntity(entity);
 		return entity;
 	}
 
-	public static Entity createSpawnerEntity(Engine engine, float timeToSpawn, Vector2 spawnLocation, Vector2 spawnVelocity, float minLifespan, float lifespanVar, float spread) {
+	public Entity createSpawnerEntity(Engine engine, Vector2 spawnLocation) {
 		Entity entity = new Entity();
 		SpawnerComponent spawnerComponent = new SpawnerComponent();
-		spawnerComponent.timeToSpawn = timeToSpawn;
 		spawnerComponent.spawnLocation.set(spawnLocation.x, spawnLocation.y);
-		spawnerComponent.spawnVelocity.set(spawnVelocity.x, spawnVelocity.y);
-		spawnerComponent.minLifespan = minLifespan;
-		spawnerComponent.lifespanVar = lifespanVar;
-		spawnerComponent.spread = spread;
 		entity.add(spawnerComponent);
 		engine.addEntity(entity);
 		return entity;

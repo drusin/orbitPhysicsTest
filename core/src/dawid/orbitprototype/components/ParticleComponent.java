@@ -2,13 +2,9 @@ package dawid.orbitprototype.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
-import com.badlogic.gdx.utils.Pool;
+import lombok.Setter;
 
-public class ParticleComponent implements Component, Pool.Poolable {
+@Setter
+public class ParticleComponent implements Component {
 	public ParticleEffectPool.PooledEffect particle = null;
-
-	@Override
-	public void reset() {
-		particle = null;
-	}
 }

@@ -19,14 +19,16 @@ public class SpawnerSystem extends IteratingSystem {
 	private final Engine engine;
 	private final World world;
 	private final ParticleProvider particleProvider;
+	private final EntityFactory entityFactory;
 	private final ComponentMapper<SpawnerComponent> spawnerMapper;
 	private final ComponentMapper<Box2dFixtureComponent> fixtureMapper;
 
-	public SpawnerSystem(Engine engine, World world, ParticleProvider particleProvider) {
+	public SpawnerSystem(Engine engine, World world, ParticleProvider particleProvider, EntityFactory entityFactory) {
 		super(Family.all(SpawnerComponent.class).get());
 		this.engine = engine;
 		this.world = world;
 		this.particleProvider = particleProvider;
+		this.entityFactory = entityFactory;
 		spawnerMapper = ComponentMapper.getFor(SpawnerComponent.class);
 		fixtureMapper = ComponentMapper.getFor(Box2dFixtureComponent.class);
 	}
@@ -41,7 +43,7 @@ public class SpawnerSystem extends IteratingSystem {
 			for (int i = 0; i < v; i++) {
 				float offsetX = (MyGdxGame.random.nextFloat() * component.spread * 2 - component.spread);
 				float offsetY = (MyGdxGame.random.nextFloat() * component.spread * 2 - component.spread);
-				Entity dustEntity = EntityFactory.createDustEntity(engine, world, component.spawnLocation.x + offsetX, component.spawnLocation.y + offsetY, component.minLifespan, component.lifespanVar, particleProvider.obtainParticle());
+				Entity dustEntity = entityFactory.createDustEntity(engine, world, component.spawnLocation.x + offsetX, component.spawnLocation.y + offsetY, component.minLifespan, component.lifespanVar, particleProvider.obtainParticle());
 				fixtureMapper.get(dustEntity).fixture.getBody().setLinearVelocity(scaleDown(component.spawnVelocity.x), scaleDown(component.spawnVelocity.y));
 			}
 		}
