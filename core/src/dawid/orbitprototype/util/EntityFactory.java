@@ -17,6 +17,7 @@ import static dawid.orbitprototype.util.CollisionBits.*;
 public class EntityFactory {
 
 	private final Array<Texture> planetTextures;
+	private final Texture dustTexture = new Texture("graphics/dust.png");
 
 	public EntityFactory() {
 		planetTextures = new Array<>();
@@ -53,6 +54,9 @@ public class EntityFactory {
 		ParticleComponent particleComponent = new ParticleComponent();
 		particleComponent.particle = particle;
 		entity.add(particleComponent);
+		TextureComponent textureComponent = new TextureComponent();
+		textureComponent.texture = dustTexture;
+		entity.add(textureComponent);
 		engine.addEntity(entity);
 		return entity;
 	}

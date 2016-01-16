@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="378.9336"
+     inkscape:cx="222.86217"
      inkscape:cy="589.17877"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -99,22 +99,24 @@
        sodipodi:start="0"
        sodipodi:end="6.2794154"
        sodipodi:open="true"
-       d="m 373.75642,359.39755 a 73.741135,73.741135 0 0 1 -73.67163,73.7411 73.741135,73.741135 0 0 1 -73.8105,-73.6021 73.741135,73.741135 0 0 1 73.5325,-73.87984 73.741135,73.741135 0 0 1 73.94911,73.46285" />
+       d="m 373.75642,359.39755 a 73.741135,73.741135 0 0 1 -73.67163,73.7411 73.741135,73.741135 0 0 1 -73.8105,-73.6021 73.741135,73.741135 0 0 1 73.5325,-73.87984 73.741135,73.741135 0 0 1 73.94911,73.46285"
+       inkscape:export-xdpi="185.37"
+       inkscape:export-ydpi="185.37" />
     <path
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.64101684;stroke-opacity:0"
        id="path4311"
        sodipodi:type="arc"
-       sodipodi:cx="302.00839"
-       sodipodi:cy="357.10498"
-       sodipodi:rx="15.657365"
-       sodipodi:ry="15.657365"
+       sodipodi:cx="297.36554"
+       sodipodi:cy="358.89069"
+       sodipodi:rx="25.693998"
+       sodipodi:ry="25.693998"
        sodipodi:start="0"
        sodipodi:end="6.2794154"
        sodipodi:open="true"
-       d="m 317.66576,357.10498 a 15.657365,15.657365 0 0 1 -15.64261,15.65736 15.657365,15.657365 0 0 1 -15.67209,-15.62785 15.657365,15.657365 0 0 1 15.61306,-15.68681 15.657365,15.657365 0 0 1 15.70153,15.59827"
+       d="m 323.05954,358.89069 a 25.693998,25.693998 0 0 1 -25.66978,25.69398 25.693998,25.693998 0 0 1 -25.71817,-25.64555 25.693998,25.693998 0 0 1 25.6213,-25.74233 25.693998,25.693998 0 0 1 25.76647,25.59703"
        inkscape:export-filename="D:\dev\workspaces\jam prototypes\orbit physics\core\assets\graphics\iris.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
+       inkscape:export-xdpi="186.69034"
+       inkscape:export-ydpi="186.69034" />
     <path
        d="m -388.41701,361.54041 a 73.741135,73.741135 0 0 1 -73.67163,73.7411 73.741135,73.741135 0 0 1 -73.81051,-73.60211 73.741135,73.741135 0 0 1 73.53251,-73.87983 73.741135,73.741135 0 0 1 73.94911,73.46284"
        sodipodi:open="true"
@@ -129,23 +131,25 @@
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-opacity:0"
        transform="scale(-1,1)" />
     <path
-       d="m -449.50767,359.96213 a 15.657365,15.657365 0 0 1 -15.64261,15.65736 15.657365,15.657365 0 0 1 -15.6721,-15.62785 15.657365,15.657365 0 0 1 15.61307,-15.68681 15.657365,15.657365 0 0 1 15.70152,15.59827"
-       sodipodi:open="true"
-       sodipodi:end="6.2794154"
-       sodipodi:start="0"
-       sodipodi:ry="15.657365"
-       sodipodi:rx="15.657365"
-       sodipodi:cy="359.96213"
-       sodipodi:cx="-465.16504"
-       sodipodi:type="arc"
-       id="path4317"
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"
-       transform="scale(-1,1)" />
-    <path
        style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:0"
        d="m 482.14288,524.50502 c 1e-5,3.54803 -47.44622,19.28237 -109.53683,19.28571 -62.0906,0.003 -108.91736,-20.72556 -109.0344,-24.27359 -0.11701,-3.54803 46.51993,11.42651 108.61029,11.41648 62.09038,-0.01 110.44034,-9.28656 110.67442,-5.73855"
        id="path4321"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cscsc" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.64101684;stroke-opacity:0"
+       id="path4311-6"
+       sodipodi:type="arc"
+       sodipodi:cx="459.28571"
+       sodipodi:cy="360.21936"
+       sodipodi:rx="25.693998"
+       sodipodi:ry="25.693998"
+       sodipodi:start="0"
+       sodipodi:end="6.2794154"
+       sodipodi:open="true"
+       d="m 484.9797,360.21936 a 25.693998,25.693998 0 0 1 -25.66978,25.69399 25.693998,25.693998 0 0 1 -25.71817,-25.64556 25.693998,25.693998 0 0 1 25.62131,-25.74233 25.693998,25.693998 0 0 1 25.76646,25.59704"
+       inkscape:export-filename="D:\dev\workspaces\jam prototypes\orbit physics\core\assets\graphics\iris.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

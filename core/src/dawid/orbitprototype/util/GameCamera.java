@@ -37,8 +37,4 @@ public class GameCamera {
 		guiCam.zoom += zoom;
 		physicsCam.zoom = guiCam.zoom;
 	}
-
-	public float getZoom() {
-		return guiCam.zoom;
-	}
 }
