@@ -29,11 +29,15 @@ public class GameCamera {
 	}
 
 	public void update() {
+		System.out.println(guiCam.zoom);
 		guiCam.update();
 		physicsCam.update();
 	}
 
 	public void zoom(float zoom) {
+		if (guiCam.zoom + zoom > 4f || guiCam.zoom + zoom < 0.4f) {
+			return;
+		}
 		guiCam.zoom += zoom;
 		physicsCam.zoom = guiCam.zoom;
 	}

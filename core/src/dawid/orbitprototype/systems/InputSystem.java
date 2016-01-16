@@ -49,7 +49,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 			float radius = scaleUp(fixtureComponent.fixture.getShape().getRadius());
 			if (x > position.x - radius && x < position.x + radius
 					&& y > position.y - radius && y < position.y + radius) {
-				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 20) {
+				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 30) {
 					System.out.println(radius);
 					FixtureCreator.resize(fixtureComponent, -10f, world);
 					planetComponent.size --;
