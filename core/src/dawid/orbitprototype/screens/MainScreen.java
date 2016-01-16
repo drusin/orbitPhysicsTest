@@ -1,6 +1,6 @@
 package dawid.orbitprototype.screens;
 
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.files.FileHandle;
@@ -25,7 +25,7 @@ import static dawid.orbitprototype.MyGdxGame.scaleDown;
 public class MainScreen extends ScreenAdapter {
 
 	private static final World world = new World(new Vector2(0, 0), true);
-	private static final PooledEngine engine = new PooledEngine();
+	private static final Engine engine = new Engine();
 
 	private final GameCamera gameCamera;
 	private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -75,7 +75,7 @@ public class MainScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-//		fpsLogger.log();
+		fpsLogger.log();
 
 		gameCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);

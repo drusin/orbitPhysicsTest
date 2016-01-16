@@ -82,9 +82,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 			startPos = new Vector2(screenX, screenY);
 		}
 		Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		System.out.println("projected " + touchPos);
 		gameCam.unproject(touchPos);
-		System.out.println("unprojected " + touchPos);
 		return false;
 	}
 

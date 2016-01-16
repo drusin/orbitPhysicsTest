@@ -1,6 +1,6 @@
 package dawid.orbitprototype.util;
 
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -15,7 +15,7 @@ public class LevelLoader {
 
 	private final static TmxMapLoader mapLoader = new TmxMapLoader();
 
-	public static void loadMap(String name, PooledEngine engine, World world) {
+	public static void loadMap(String name, Engine engine, World world) {
 		TiledMap map = mapLoader.load(name);
 
 		createSpawners(engine, map);
@@ -23,7 +23,7 @@ public class LevelLoader {
 		createGoals(engine, world, map);
 	}
 
-	private static void createSpawners(PooledEngine engine, TiledMap map) {
+	private static void createSpawners(Engine engine, TiledMap map) {
 		for (RectangleMapObject object : map.getLayers().get(TiledConstants.SPAWNER_LAYER).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rectangle = object.getRectangle();
 			MapProperties properties = object.getProperties();
@@ -39,7 +39,7 @@ public class LevelLoader {
 		}
 	}
 
-	private static void createPlanets(PooledEngine engine, World world, TiledMap map) {
+	private static void createPlanets(Engine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.PLANET_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
 			MapProperties properties = object.getProperties();
@@ -53,7 +53,7 @@ public class LevelLoader {
 		}
 	}
 
-	private static void createGoals(PooledEngine engine, World world, TiledMap map) {
+	private static void createGoals(Engine engine, World world, TiledMap map) {
 		for (EllipseMapObject object : map.getLayers().get(TiledConstants.GOAL_LAYER).getObjects().getByType(EllipseMapObject.class)) {
 			Ellipse ellipse = object.getEllipse();
 			MapProperties properties = object.getProperties();
