@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import dawid.orbitprototype.components.GoalComponent;
 
 public class GoalSystem extends IteratingSystem {
+
 	public GoalSystem() {
 		super(Family.all(GoalComponent.class).get());
 	}

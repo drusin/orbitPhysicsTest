@@ -5,19 +5,20 @@ name			|	defaultValue	|	validValues			|	description
 Spawner:
 vx				|	0				|	any number			| 	velocity of the stardust in x-direction
 vy				|	0				|	any number			| 	velocity of the stardust in y-direction
-timeToSpawn		|	0.1				|	any number			|	time between spawning of two stardust particles
+timeToSpawn		|	0.1				|	any positive number	|	time between spawning of two stardust particles
 minLifespan		|	5				|	any positive number	|	the minimal time in seconds that a spawned
 																stardust particle will exist
 lifespanVar		|	20				|	any positive number	|	the maximal variation of the lifespan of a
 																spawned particle in seconds. A random number 
 																between zero and lifespanVar will be added to
 																minLifespan
+spread			|	10				|	any positive number	|	the spread of spawning particles
 
 																
 Planet:
 size			|	0				|	any integer			|	the size (just as a defined number) when spawned
-maxSize			|	999				|	any integer			|	the maximum size this planet can get in the game
-minSize			|	-999			|	any integer			|	the minimum size this planet can get in the game
+maxSize			|	999				|	any integer			|	the maximum size this planet can get, should be >= size
+minSize			|	-999			|	any integer			|	the minimum size this planet can get, should be <= size
 
 
 Goal:

@@ -18,7 +18,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create() {
 		if (arg.length != 0) {
-			setScreen(new MainScreen(arg[0]));
+			setScreen(new MainScreen(arg[0], this));
 		}
 		else {
 			setScreen(new LevelSelectScreen(this));
@@ -26,7 +26,7 @@ public class MyGdxGame extends Game {
 	}
 
 	public void loadLevel(FileHandle level) {
-		setScreen(new MainScreen(level));
+		setScreen(new MainScreen(level, this));
 	}
 
 	public static float scaleDown(float f) {

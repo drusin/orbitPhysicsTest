@@ -29,7 +29,6 @@ public class GameCamera {
 	}
 
 	public void update() {
-		System.out.println(guiCam.zoom);
 		guiCam.update();
 		physicsCam.update();
 	}

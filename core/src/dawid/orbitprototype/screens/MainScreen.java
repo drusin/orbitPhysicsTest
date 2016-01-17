@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.systems.*;
 import dawid.orbitprototype.util.EntityFactory;
 import dawid.orbitprototype.util.GameCamera;
@@ -25,23 +26,26 @@ import static dawid.orbitprototype.MyGdxGame.scaleDown;
 
 public class MainScreen extends ScreenAdapter {
 
-	private static final World world = new World(new Vector2(0, 0), true);
 	private static final Engine engine = new Engine();
 
+	private final World world;
 	private final GameCamera gameCamera;
 	private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 	private final Viewport gamePort;
 	private final Viewport physicsPort;
 	private final SpriteBatch batch = new SpriteBatch();
 	private final ParticleEffectPool particleEffectPool;
+	private final MyGdxGame game;
 	private FPSLogger fpsLogger;
 	private EntityFactory entityFactory;
 
-	public MainScreen(String level) {
-		this(new FileHandle(level));
+	public MainScreen(String level, MyGdxGame game) {
+		this(new FileHandle(level), game);
 	}
 
-	public MainScreen(FileHandle level) {
+	public MainScreen(FileHandle level, MyGdxGame game) {
+		this.game = game;
+		world = new World(new Vector2(0, 0), true);
 		OrthographicCamera guiCam = new OrthographicCamera(1280, 720);
 		OrthographicCamera physicsCam = new OrthographicCamera(scaleDown(1280), scaleDown(720));
 		gamePort = new FillViewport(1280, 720, guiCam);
@@ -59,7 +63,7 @@ public class MainScreen extends ScreenAdapter {
 		entityFactory = new EntityFactory();
 
 		engine.addSystem(new GravitySystem());
-		InputSystem inputSystem = new InputSystem(gameCamera, world);
+		InputSystem inputSystem = new InputSystem(gameCamera, world, game, this);
 		engine.addSystem(inputSystem);
 		Gdx.input.setInputProcessor(inputSystem);
 		engine.addSystem(new LifespanSystem());
@@ -102,5 +106,6 @@ public class MainScreen extends ScreenAdapter {
 	public void dispose() {
 		world.dispose();
 		debugRenderer.dispose();
+		engine.removeAllEntities();
 	}
 }

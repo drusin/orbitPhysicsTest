@@ -10,8 +10,11 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.components.Box2dFixtureComponent;
 import dawid.orbitprototype.components.PlanetComponent;
+import dawid.orbitprototype.screens.LevelSelectScreen;
+import dawid.orbitprototype.screens.MainScreen;
 import dawid.orbitprototype.util.FixtureCreator;
 import dawid.orbitprototype.util.GameCamera;
 
@@ -21,14 +24,18 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private final GameCamera gameCam;
 	private final World world;
+	private final MyGdxGame game;
+	private final MainScreen mainScreen;
 	private final ComponentMapper<PlanetComponent> planetMapper;
 	private final ComponentMapper<Box2dFixtureComponent> fixtureMapper;
 	private Vector2 startPos = null;
 
-	public InputSystem(GameCamera gameCam, World world) {
+	public InputSystem(GameCamera gameCam, World world, MyGdxGame game, MainScreen mainScreen) {
 		super(Family.all(PlanetComponent.class, Box2dFixtureComponent.class).get());
 		this.gameCam = gameCam;
 		this.world = world;
+		this.game = game;
+		this.mainScreen = mainScreen;
 		planetMapper = ComponentMapper.getFor(PlanetComponent.class);
 		fixtureMapper = ComponentMapper.getFor(Box2dFixtureComponent.class);
 	}
@@ -50,7 +57,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 			if (x > position.x - radius && x < position.x + radius
 					&& y > position.y - radius && y < position.y + radius) {
 				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 30) {
-					System.out.println(radius);
 					FixtureCreator.resize(fixtureComponent, -10f, world);
 					planetComponent.size --;
 				}
@@ -64,6 +70,10 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.ESCAPE) {
+			mainScreen.dispose();
+			game.setScreen(new LevelSelectScreen(game));
+		}
 		return false;
 	}
 
