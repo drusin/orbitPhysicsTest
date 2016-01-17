@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.systems.*;
 import dawid.orbitprototype.util.EntityFactory;
@@ -44,8 +44,8 @@ public class MainScreen extends ScreenAdapter {
 	public MainScreen(FileHandle level) {
 		OrthographicCamera guiCam = new OrthographicCamera(1280, 720);
 		OrthographicCamera physicsCam = new OrthographicCamera(scaleDown(1280), scaleDown(720));
-		gamePort = new FitViewport(1280, 720, guiCam);
-		physicsPort = new FitViewport(scaleDown(1280), scaleDown(720), physicsCam);
+		gamePort = new FillViewport(1280, 720, guiCam);
+		physicsPort = new FillViewport(scaleDown(1280), scaleDown(720), physicsCam);
 
 		gameCamera = new GameCamera(gamePort, guiCam, physicsCam);
 
@@ -86,8 +86,6 @@ public class MainScreen extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		world.step(delta, 6, 2);
-//		debugRenderer.render(world, gameCamera.physicsCam.combined);
-
 		batch.setProjectionMatrix(gameCamera.guiCam.combined);
 		batch.begin();
 		engine.update(delta);
