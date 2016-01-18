@@ -41,35 +41,9 @@ public class IngameInputProcessor implements InputProcessor {
 		fixtureMapper = ComponentMapper.getFor(Box2dFixtureComponent.class);
 	}
 
-	protected void processEntity(Entity entity, float deltaTime) {
-			Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-			gameCam.unproject(touchPos);
-			float x = touchPos.x;
-			float y = touchPos.y;
-
-			PlanetComponent planetComponent = planetMapper.get(entity);
-			Box2dFixtureComponent fixtureComponent = fixtureMapper.get(entity);
-			Vector2 position = fixtureComponent.fixture.getBody().getPosition();
-			position.x = scaleUp(position.x);
-			position.y = scaleUp(position.y);
-			float radius = scaleUp(fixtureComponent.fixture.getShape().getRadius());
-			if (x > position.x - radius && x < position.x + radius
-					&& y > position.y - radius && y < position.y + radius) {
-				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 30) {
-					FixtureCreator.resize(fixtureComponent, -10f, world);
-					planetComponent.size --;
-				}
-				else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && planetComponent.size < planetComponent.maxSize){
-					FixtureCreator.resize(fixtureComponent, 10f, world);
-					planetComponent.size ++;
-				}
-			}
-	}
-
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.ESCAPE) {
-			mainScreen.dispose();
 			game.setScreen(new LevelSelectScreen(game));
 		}
 		return false;

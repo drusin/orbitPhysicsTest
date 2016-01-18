@@ -23,12 +23,13 @@ import dawid.orbitprototype.util.EntityFactory;
 import dawid.orbitprototype.util.GameCamera;
 import dawid.orbitprototype.util.LevelLoader;
 import dawid.orbitprototype.util.WorldContactListener;
+import lombok.Getter;
 
 import static dawid.orbitprototype.MyGdxGame.scaleDown;
 
 public class MainScreen extends ScreenAdapter {
 
-	private static final Engine engine = new Engine();
+	private final Engine engine;
 
 	private final World world;
 	private final GameCamera gameCamera;
@@ -37,17 +38,23 @@ public class MainScreen extends ScreenAdapter {
 	private final Viewport physicsPort;
 	private final SpriteBatch batch = new SpriteBatch();
 	private final ParticleEffectPool particleEffectPool;
+	@Getter
+	private final int levelnumber;
 	private final MyGdxGame game;
 	private FPSLogger fpsLogger;
 	private EntityFactory entityFactory;
 	private LevelWonScene levelWon;
+	private boolean levelIsWon = false;
+	private GoalSystem goalSystem;
 
-	public MainScreen(String level, MyGdxGame game) {
-		this(new FileHandle(level), game);
+	public MainScreen(String level, int levelNumber, MyGdxGame game) {
+		this(new FileHandle(level), levelNumber, game);
 	}
 
-	public MainScreen(FileHandle level, MyGdxGame game) {
+	public MainScreen(FileHandle level, int levelnumber, MyGdxGame game) {
+		this.levelnumber = levelnumber;
 		this.game = game;
+		engine = new Engine();
 		world = new World(new Vector2(0, 0), true);
 		OrthographicCamera guiCam = new OrthographicCamera(1280, 720);
 		OrthographicCamera physicsCam = new OrthographicCamera(scaleDown(1280), scaleDown(720));
@@ -64,25 +71,24 @@ public class MainScreen extends ScreenAdapter {
 		particleEffectPool = new ParticleEffectPool(particleEffect, 100, 100);
 
 		entityFactory = new EntityFactory();
+		LevelLoader.loadMap(level.path(), engine, world, entityFactory);
 
-		engine.addSystem(new GravitySystem());
 		IngameInputProcessor ingameInputProcessor = new IngameInputProcessor(engine, gameCamera, world, game, this);
 		Gdx.input.setInputProcessor(ingameInputProcessor);
+		engine.addSystem(new GravitySystem());
 		engine.addSystem(new LifespanSystem());
 		engine.addSystem(new DestroySystem(engine, world));
 		engine.addSystem(new SpawnerSystem(engine, world, particleEffectPool::obtain, entityFactory));
-		engine.addSystem(new GoalSystem());
+		goalSystem = new GoalSystem(this);
+		engine.addSystem(goalSystem);
 		engine.addSystem(new DrawPlanetSystem(batch, gameCamera));
 		engine.addSystem(new DrawGoalSystem(batch));
 		engine.addSystem(new DrawDustSystem(batch));
 		engine.addSystem(new RemoveParticlesSystem());
 
-		LevelLoader.loadMap(level.path(), engine, world, entityFactory);
 
 		world.setContactListener(new WorldContactListener());
 		fpsLogger = new FPSLogger();
-
-//		levelWon = new LevelWonScene();
 	}
 
 	@Override
@@ -98,15 +104,20 @@ public class MainScreen extends ScreenAdapter {
 		batch.begin();
 		engine.update(delta);
 		batch.end();
-//		batch.setProjectionMatrix(levelWon.getStage().getCamera().combined);
-//		levelWon.getStage().draw();
+
+		if (levelIsWon) {
+			batch.setProjectionMatrix(levelWon.getStage().getCamera().combined);
+			levelWon.getStage().draw();
+		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
 		physicsPort.update(width, height);
-//		levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight());
+		if (levelIsWon) {
+			levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this);
+		}
 	}
 
 	@Override
@@ -114,5 +125,11 @@ public class MainScreen extends ScreenAdapter {
 		world.dispose();
 		debugRenderer.dispose();
 		engine.removeAllEntities();
+	}
+
+	public void levelIsWon() {
+		goalSystem.setProcessing(false);
+		levelIsWon = true;
+		levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this);
 	}
 }

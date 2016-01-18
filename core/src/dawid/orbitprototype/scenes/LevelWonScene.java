@@ -6,11 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import dawid.orbitprototype.MyGdxGame;
+import dawid.orbitprototype.screens.LevelSelectScreen;
+import dawid.orbitprototype.screens.MainScreen;
 import lombok.Getter;
 
 public class LevelWonScene {
@@ -19,11 +24,7 @@ public class LevelWonScene {
 	private final Stage stage;
 	private final Skin skin;
 
-	public LevelWonScene() {
-		this(1280, 720);
-	}
-
-	public LevelWonScene(int width, int height) {
+	public LevelWonScene(int width, int height, MyGdxGame game, MainScreen mainScreen) {
 		stage = new Stage(new FillViewport(width, height));
 		Gdx.input.setInputProcessor(stage);
 
@@ -63,26 +64,39 @@ public class LevelWonScene {
 		table.add(timeGroup).padBottom(20);
 		table.row();
 
+		FileHandle nextLevel = game.getLevels().get(mainScreen.getLevelnumber() + 1);
+
 		final TextButton nextLevelButton = new TextButton("Next Level!", skin);
+		nextLevelButton.setDisabled(nextLevel == null);
 		table.add(nextLevelButton).padBottom(10).width(200);
 		table.row();
+
+		nextLevelButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				int nextLevelNumber = mainScreen.getLevelnumber() + 1;
+				game.loadLevel(nextLevelNumber);
+			}
+		});
 
 		final TextButton retryButton = new TextButton("Retry!", skin);
 		table.add(retryButton).padBottom(10).width(200);
 		table.row();
 
+		retryButton.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				game.loadLevel(mainScreen.getLevelnumber());
+			}
+		});
+
 		final TextButton menuButton = new TextButton("Main Menu!", skin);
 		table.add(menuButton).width(200);
 		table.row();
 
-		// Add a listener to the button. ChangeListener is fired when the button's checked state changes, eg when clicked,
-		// Button#setChecked() is called, via a key press, etc. If the event.cancel() is called, the checked state will be reverted.
-		// ClickListener could have been used, but would only fire when clicked. Also, canceling a ClickListener event won't
-		// revert the checked state.
-		retryButton.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				System.out.println("Clicked! Is checked: " + retryButton.isChecked());
-				retryButton.setText("Good job!");
+		menuButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new LevelSelectScreen(game));
 			}
 		});
 	}

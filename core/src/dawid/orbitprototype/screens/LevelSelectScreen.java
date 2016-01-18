@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.MyGdxGame;
@@ -19,14 +20,14 @@ public class LevelSelectScreen extends ScreenAdapter {
 	private final Viewport gamePort = new FitViewport(1280, 720, gameCam);
 	private final BitmapFont font;
 	private final SpriteBatch batch = new SpriteBatch();
-	private final FileHandle[] presentLevels;
 	private final MyGdxGame game;
+	private final ArrayMap<Integer, FileHandle> levels;
 
 	public LevelSelectScreen(MyGdxGame game) {
 		this.game = game;
 		gamePort.apply(true);
 
-		presentLevels = Gdx.files.internal("levels").list();
+		levels = game.getLevels();
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/coolvetica rg.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.borderWidth = 1;
@@ -46,8 +47,8 @@ public class LevelSelectScreen extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(gameCam.combined);
 		batch.begin();
-		for (int i = 0; i < presentLevels.length; i++) {
-			font.draw(batch, presentLevels[i].name(), 500, 720 - (30 * i + 20));
+		for (int i = 0; i < levels.size; i++) {
+			font.draw(batch, levels.get(i +1).name(), 500, 720 - (30 * i + 20));
 		}
 		batch.end();
 		handleInput();
@@ -65,9 +66,8 @@ public class LevelSelectScreen extends ScreenAdapter {
 			gamePort.unproject(touchPos);
 			float y = 720 - touchPos.y;
 			y = Math.round((y - 20) / 30);
-			if (presentLevels.length >= y + 1) {
-				game.loadLevel(presentLevels[(int) y]);
-				dispose();
+			if (levels.size >= y + 1) {
+				game.loadLevel((int) y + 1);
 			}
 		}
 	}
