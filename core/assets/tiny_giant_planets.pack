@@ -1,0 +1,37 @@
+
+tiny_giant_planets.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menu_background
+  rotate: false
+  xy: 1, 1
+  size: 138, 55
+  split: 69, 68, 18, 36
+  orig: 138, 55
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 141, 10
+  size: 46, 46
+  split: 23, 22, 22, 23
+  orig: 46, 46
+  offset: 0, 0
+  index: -1
+button_disabled
+  rotate: false
+  xy: 189, 10
+  size: 46, 46
+  split: 22, 23, 22, 23
+  orig: 46, 46
+  offset: 0, 0
+  index: -1
+button_pressed
+  rotate: false
+  xy: 237, 10
+  size: 46, 46
+  split: 22, 23, 22, 23
+  orig: 46, 46
+  offset: 0, 0
+  index: -1

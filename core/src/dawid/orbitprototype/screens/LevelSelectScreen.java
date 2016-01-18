@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dawid.orbitprototype.MyGdxGame;
 
 public class LevelSelectScreen extends ScreenAdapter {
 
 	private final OrthographicCamera gameCam = new OrthographicCamera(1280, 720);
-	private final Viewport gamePort = new FillViewport(1280, 720, gameCam);
+	private final Viewport gamePort = new FitViewport(1280, 720, gameCam);
 	private final BitmapFont font;
 	private final SpriteBatch batch = new SpriteBatch();
 	private final FileHandle[] presentLevels;

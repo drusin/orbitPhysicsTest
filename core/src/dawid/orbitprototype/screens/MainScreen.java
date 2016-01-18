@@ -15,7 +15,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dawid.orbitprototype.IngameInputProcessor;
 import dawid.orbitprototype.MyGdxGame;
+import dawid.orbitprototype.scenes.LevelWonScene;
 import dawid.orbitprototype.systems.*;
 import dawid.orbitprototype.util.EntityFactory;
 import dawid.orbitprototype.util.GameCamera;
@@ -38,6 +40,7 @@ public class MainScreen extends ScreenAdapter {
 	private final MyGdxGame game;
 	private FPSLogger fpsLogger;
 	private EntityFactory entityFactory;
+	private LevelWonScene levelWon;
 
 	public MainScreen(String level, MyGdxGame game) {
 		this(new FileHandle(level), game);
@@ -63,9 +66,8 @@ public class MainScreen extends ScreenAdapter {
 		entityFactory = new EntityFactory();
 
 		engine.addSystem(new GravitySystem());
-		InputSystem inputSystem = new InputSystem(gameCamera, world, game, this);
-		engine.addSystem(inputSystem);
-		Gdx.input.setInputProcessor(inputSystem);
+		IngameInputProcessor ingameInputProcessor = new IngameInputProcessor(engine, gameCamera, world, game, this);
+		Gdx.input.setInputProcessor(ingameInputProcessor);
 		engine.addSystem(new LifespanSystem());
 		engine.addSystem(new DestroySystem(engine, world));
 		engine.addSystem(new SpawnerSystem(engine, world, particleEffectPool::obtain, entityFactory));
@@ -79,6 +81,8 @@ public class MainScreen extends ScreenAdapter {
 
 		world.setContactListener(new WorldContactListener());
 		fpsLogger = new FPSLogger();
+
+//		levelWon = new LevelWonScene();
 	}
 
 	@Override
@@ -94,12 +98,15 @@ public class MainScreen extends ScreenAdapter {
 		batch.begin();
 		engine.update(delta);
 		batch.end();
+//		batch.setProjectionMatrix(levelWon.getStage().getCamera().combined);
+//		levelWon.getStage().draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
 		physicsPort.update(width, height);
+//		levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight());
 	}
 
 	@Override

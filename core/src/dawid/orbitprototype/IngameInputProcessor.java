@@ -1,16 +1,16 @@
-package dawid.orbitprototype.systems;
+package dawid.orbitprototype;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
-import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.components.Box2dFixtureComponent;
 import dawid.orbitprototype.components.PlanetComponent;
 import dawid.orbitprototype.screens.LevelSelectScreen;
@@ -20,7 +20,7 @@ import dawid.orbitprototype.util.GameCamera;
 
 import static dawid.orbitprototype.MyGdxGame.scaleUp;
 
-public class InputSystem extends IteratingSystem implements InputProcessor {
+public class IngameInputProcessor implements InputProcessor {
 
 	private final GameCamera gameCam;
 	private final World world;
@@ -28,10 +28,11 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	private final MainScreen mainScreen;
 	private final ComponentMapper<PlanetComponent> planetMapper;
 	private final ComponentMapper<Box2dFixtureComponent> fixtureMapper;
+	private final ImmutableArray<Entity> planetEntities;
 	private Vector2 startPos = null;
 
-	public InputSystem(GameCamera gameCam, World world, MyGdxGame game, MainScreen mainScreen) {
-		super(Family.all(PlanetComponent.class, Box2dFixtureComponent.class).get());
+	public IngameInputProcessor(Engine engine, GameCamera gameCam, World world, MyGdxGame game, MainScreen mainScreen) {
+		planetEntities = engine.getEntitiesFor(Family.all(PlanetComponent.class, Box2dFixtureComponent.class).get());
 		this.gameCam = gameCam;
 		this.world = world;
 		this.game = game;
@@ -40,9 +41,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		fixtureMapper = ComponentMapper.getFor(Box2dFixtureComponent.class);
 	}
 
-	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		if (Gdx.input.justTouched()) {
 			Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			gameCam.unproject(touchPos);
 			float x = touchPos.x;
@@ -65,7 +64,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 					planetComponent.size ++;
 				}
 			}
-		}
 	}
 
 	@Override
@@ -94,6 +92,28 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		}
 		Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		gameCam.unproject(touchPos);
+
+		float x = touchPos.x;
+		float y = touchPos.y;
+
+		for (Entity entity : planetEntities) {
+			PlanetComponent planetComponent = planetMapper.get(entity);
+			Box2dFixtureComponent fixtureComponent = fixtureMapper.get(entity);
+			Vector2 position = fixtureComponent.fixture.getBody().getPosition();
+			position.x = scaleUp(position.x);
+			position.y = scaleUp(position.y);
+			float radius = scaleUp(fixtureComponent.fixture.getShape().getRadius());
+			if (x > position.x - radius && x < position.x + radius
+					&& y > position.y - radius && y < position.y + radius) {
+				if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && planetComponent.size > planetComponent.minSize && radius > 30) {
+					FixtureCreator.resize(fixtureComponent, -10f, world);
+					planetComponent.size--;
+				} else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && planetComponent.size < planetComponent.maxSize) {
+					FixtureCreator.resize(fixtureComponent, 10f, world);
+					planetComponent.size++;
+				}
+			}
+		}
 		return false;
 	}
 
