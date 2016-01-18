@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -25,6 +26,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 	private final MyGdxGame game;
 	private final ArrayMap<Integer, FileHandle> levels;
 	private final Music music;
+	private final Texture titleScreen;
 
 	public LevelSelectScreen(MyGdxGame game, Assets assets) {
 		this.game = game;
@@ -39,6 +41,8 @@ public class LevelSelectScreen extends ScreenAdapter {
 
 		music = assets.getTitleTrack();
 		music.setLooping(true);
+
+		titleScreen = new Texture("title.png");
 	}
 
 
@@ -57,6 +61,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(gameCam.combined);
 		batch.begin();
+		batch.draw(titleScreen, 0, 0, gamePort.getScreenWidth(), gamePort.getScreenHeight());
 		for (int i = 0; i < levels.size; i++) {
 			font.draw(batch, levels.get(i +1).name(), 500, 720 - (30 * i + 20));
 		}
