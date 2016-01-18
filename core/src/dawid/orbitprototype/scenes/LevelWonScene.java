@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import dawid.orbitprototype.Assets;
 import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.screens.LevelSelectScreen;
 import dawid.orbitprototype.screens.MainScreen;
@@ -24,12 +25,12 @@ public class LevelWonScene {
 	private final Stage stage;
 	private final Skin skin;
 
-	public LevelWonScene(int width, int height, MyGdxGame game, MainScreen mainScreen) {
+	public LevelWonScene(int width, int height, MyGdxGame game, MainScreen mainScreen, Assets assets) {
 		stage = new Stage(new FillViewport(width, height));
 		Gdx.input.setInputProcessor(stage);
 
 		TextureAtlas atlas = new TextureAtlas("tiny_giant_planets.pack");
-		skin = new Skin(new FileHandle("skin.json"), atlas);
+		skin = new Skin(Gdx.files.internal("skin.json"), atlas);
 
 		NinePatchDrawable menu_background = new NinePatchDrawable(new NinePatch(new Texture("menu_background.png"), 68, 69, 19, 35));
 
@@ -96,7 +97,7 @@ public class LevelWonScene {
 		menuButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new LevelSelectScreen(game));
+				game.setScreen(new LevelSelectScreen(game, assets));
 			}
 		});
 	}

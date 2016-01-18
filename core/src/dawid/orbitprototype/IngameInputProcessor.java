@@ -29,9 +29,11 @@ public class IngameInputProcessor implements InputProcessor {
 	private final ComponentMapper<PlanetComponent> planetMapper;
 	private final ComponentMapper<Box2dFixtureComponent> fixtureMapper;
 	private final ImmutableArray<Entity> planetEntities;
+	private final Assets assets;
 	private Vector2 startPos = null;
 
-	public IngameInputProcessor(Engine engine, GameCamera gameCam, World world, MyGdxGame game, MainScreen mainScreen) {
+	public IngameInputProcessor(Engine engine, GameCamera gameCam, World world, MyGdxGame game, MainScreen mainScreen, Assets assets) {
+		this.assets = assets;
 		planetEntities = engine.getEntitiesFor(Family.all(PlanetComponent.class, Box2dFixtureComponent.class).get());
 		this.gameCam = gameCam;
 		this.world = world;
@@ -44,7 +46,7 @@ public class IngameInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.ESCAPE) {
-			game.setScreen(new LevelSelectScreen(game));
+			game.setScreen(new LevelSelectScreen(game, assets));
 		}
 		return false;
 	}

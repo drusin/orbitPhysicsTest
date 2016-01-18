@@ -3,6 +3,7 @@ package dawid.orbitprototype.screens;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dawid.orbitprototype.Assets;
 import dawid.orbitprototype.IngameInputProcessor;
 import dawid.orbitprototype.MyGdxGame;
 import dawid.orbitprototype.scenes.LevelWonScene;
@@ -41,19 +43,22 @@ public class MainScreen extends ScreenAdapter {
 	@Getter
 	private final int levelnumber;
 	private final MyGdxGame game;
+	private final Assets assets;
 	private FPSLogger fpsLogger;
 	private EntityFactory entityFactory;
 	private LevelWonScene levelWon;
 	private boolean levelIsWon = false;
 	private GoalSystem goalSystem;
+	private Music music;
 
-	public MainScreen(String level, int levelNumber, MyGdxGame game) {
-		this(new FileHandle(level), levelNumber, game);
+	public MainScreen(String level, int levelNumber, MyGdxGame game, Assets assets) {
+		this(new FileHandle(level), levelNumber, game, assets);
 	}
 
-	public MainScreen(FileHandle level, int levelnumber, MyGdxGame game) {
+	public MainScreen(FileHandle level, int levelnumber, MyGdxGame game, Assets assets) {
 		this.levelnumber = levelnumber;
 		this.game = game;
+		this.assets = assets;
 		engine = new Engine();
 		world = new World(new Vector2(0, 0), true);
 		OrthographicCamera guiCam = new OrthographicCamera(1280, 720);
@@ -73,7 +78,7 @@ public class MainScreen extends ScreenAdapter {
 		entityFactory = new EntityFactory();
 		LevelLoader.loadMap(level.path(), engine, world, entityFactory);
 
-		IngameInputProcessor ingameInputProcessor = new IngameInputProcessor(engine, gameCamera, world, game, this);
+		IngameInputProcessor ingameInputProcessor = new IngameInputProcessor(engine, gameCamera, world, game, this, assets);
 		Gdx.input.setInputProcessor(ingameInputProcessor);
 		engine.addSystem(new GravitySystem());
 		engine.addSystem(new LifespanSystem());
@@ -88,11 +93,19 @@ public class MainScreen extends ScreenAdapter {
 
 
 		world.setContactListener(new WorldContactListener());
+
+		music = assets.getSongs().get(MyGdxGame.random.nextInt(assets.getSongs().size));
+		music.setLooping(true);
+
 		fpsLogger = new FPSLogger();
 	}
 
 	@Override
 	public void render(float delta) {
+		if (!music.isPlaying()) {
+			music.play();
+		}
+
 		fpsLogger.log();
 
 		gameCamera.update();
@@ -116,7 +129,7 @@ public class MainScreen extends ScreenAdapter {
 		gamePort.update(width, height);
 		physicsPort.update(width, height);
 		if (levelIsWon) {
-			levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this);
+			levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this, assets);
 		}
 	}
 
@@ -125,11 +138,12 @@ public class MainScreen extends ScreenAdapter {
 		world.dispose();
 		debugRenderer.dispose();
 		engine.removeAllEntities();
+		music.stop();
 	}
 
 	public void levelIsWon() {
 		goalSystem.setProcessing(false);
 		levelIsWon = true;
-		levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this);
+		levelWon = new LevelWonScene(gamePort.getScreenWidth(), gamePort.getScreenHeight(), game, this, assets);
 	}
 }

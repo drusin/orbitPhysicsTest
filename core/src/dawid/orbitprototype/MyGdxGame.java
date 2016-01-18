@@ -17,6 +17,7 @@ public class MyGdxGame extends Game {
 	@Getter
 	private ArrayMap<Integer, FileHandle> levels;
 	private Screen currentScreen;
+	private Assets assets;
 
 	public MyGdxGame(String[] arg) {
 		this.arg = arg;
@@ -30,16 +31,18 @@ public class MyGdxGame extends Game {
 			levels.put(i, levelArray[i-1]);
 		}
 
+		assets = new Assets();
+
 		if (arg.length != 0) {
-			setScreen(new MainScreen(arg[0], 0, this));
+			setScreen(new MainScreen(arg[0], 0, this, assets));
 		}
 		else {
-			setScreen(new LevelSelectScreen(this));
+			setScreen(new LevelSelectScreen(this, assets));
 		}
 	}
 
 	public void loadLevel(int levelNumber) {
-		setScreen(new MainScreen(levels.get(levelNumber), levelNumber, this));
+		setScreen(new MainScreen(levels.get(levelNumber), levelNumber, this, assets));
 	}
 	public static float scaleDown(float f) {
 		return f / 100;
@@ -47,6 +50,12 @@ public class MyGdxGame extends Game {
 
 	public static float scaleUp(float f) {
 		return f * 100;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		assets.dispose();
 	}
 
 	@Override

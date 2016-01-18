@@ -2,6 +2,7 @@ package dawid.orbitprototype.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import dawid.orbitprototype.Assets;
 import dawid.orbitprototype.MyGdxGame;
 
 public class LevelSelectScreen extends ScreenAdapter {
@@ -22,8 +24,9 @@ public class LevelSelectScreen extends ScreenAdapter {
 	private final SpriteBatch batch = new SpriteBatch();
 	private final MyGdxGame game;
 	private final ArrayMap<Integer, FileHandle> levels;
+	private final Music music;
 
-	public LevelSelectScreen(MyGdxGame game) {
+	public LevelSelectScreen(MyGdxGame game, Assets assets) {
 		this.game = game;
 		gamePort.apply(true);
 
@@ -33,6 +36,9 @@ public class LevelSelectScreen extends ScreenAdapter {
 		parameter.borderWidth = 1;
 		font = generator.generateFont(parameter);
 		generator.dispose();
+
+		music = assets.getTitleTrack();
+		music.setLooping(true);
 	}
 
 
@@ -43,6 +49,10 @@ public class LevelSelectScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		if (!music.isPlaying()) {
+			music.play();
+		}
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(gameCam.combined);
@@ -58,6 +68,7 @@ public class LevelSelectScreen extends ScreenAdapter {
 	public void dispose() {
 		batch.dispose();
 		font.dispose();
+		music.stop();
 	}
 
 	private void handleInput() {
